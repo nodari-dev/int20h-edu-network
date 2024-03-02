@@ -30,25 +30,23 @@ const tableData: any = {
   fullName: "fullName",
   phoneNumber: "phoneNumber",
   age: "age",
-  botTypes: "botTypes",
-  region: "region",
-  type: "type",
-  registrationDate: "registrationDate",
+  role: "role",
+  email: "email"
 };
 
 export const Student: FC<IProps> = (): JSX.Element => {
-  const { userId } = useParams();
+  const { id } = useParams();
   const { t } = useTranslation();
   const [ user, setUser ] = useState<any>();
   const [ executeSearch ] = useLazyQuery(USER);
 
   useEffect(() => {
-    if (userId) {
-      executeSearch({ variables: { id: userId } }).then((data) => {
+    if (id) {
+      executeSearch({ variables: { id } }).then((data) => {
         setUser(data.data.pagedUsers.items[0]);
       });
     }
-  }, [ userId ]);
+  }, [ id ]);
 
   const items = user
     ? Object.keys(tableData).map((key: any) => ({
