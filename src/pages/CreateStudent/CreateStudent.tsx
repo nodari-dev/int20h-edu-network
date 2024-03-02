@@ -1,9 +1,8 @@
 import { FC } from "react";
 import { Button, Col, Flex, Form, Input, Row, Select, Space } from "antd";
 import Title from "antd/es/typography/Title";
-import TextArea from "antd/lib/input/TextArea";
 import { INSTITUTES } from "../CreateTeacher/institutes";
-import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { gql, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -30,11 +29,7 @@ export const CreateStudent: FC<IProps> = (): JSX.Element => {
       variables: {
         input: {
           command: {
-            fullName: body.title,
-            email: body.email,
-            phone: body.phone,
-            institute: body.institute,
-            group: body.group,
+            users: body.users,
           },
         },
       },
@@ -44,7 +39,7 @@ export const CreateStudent: FC<IProps> = (): JSX.Element => {
   };
 
   const initialValues = {
-    users: []
+    users: [],
   };
 
   return (
@@ -57,7 +52,7 @@ export const CreateStudent: FC<IProps> = (): JSX.Element => {
             onFinish={handleCreate}
             initialValues={initialValues}
           >
-            <Title>{t("groups.createTitle")}</Title>
+            <Title>Create users</Title>
             <Form.List
               name="users"
               rules={[
@@ -87,7 +82,10 @@ export const CreateStudent: FC<IProps> = (): JSX.Element => {
                         {...restField}
                         name={[ name, "email" ]}
                         label="Email"
-                        rules={[ { type: "email", message: "Incorrect email!" }, { required: true, message: "Missing email" } ]}
+                        rules={[
+                          { type: "email", message: "Incorrect email!" },
+                          { required: true, message: "Missing email" },
+                        ]}
                       >
                         <Input />
                       </Form.Item>
