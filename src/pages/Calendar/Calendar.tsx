@@ -1,13 +1,18 @@
 import { FC } from "react";
-import { Flex } from "antd";
+import {ROLE} from "../../models/user";
+import {useAuthorization} from "../../hooks";
+import {CalendarTeacher} from "./CalendarTeacher";
+import {CalendarStudent} from "./CalendarStudent";
 
 interface IProps {}
 
 export const Calendar: FC<IProps> = (): JSX.Element => {
+  const {user} = useAuthorization();
 
-  return (
-    <Flex gap="small" vertical>
-      Calendar
-    </Flex>
-  );
+  const profiles = {
+    [ROLE.TEACHER]: <CalendarTeacher/>,
+    [ROLE.STUDENT]: <CalendarStudent/>
+  };
+
+  return profiles[user.role];
 };

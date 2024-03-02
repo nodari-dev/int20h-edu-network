@@ -8,7 +8,6 @@ export interface IUser {
   role: Role | null;
 }
 
-
 export type Role = "ADMIN" | "TEACHER" | "STUDENT";
 
 export enum ROLE {
