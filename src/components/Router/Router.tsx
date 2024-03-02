@@ -26,12 +26,7 @@ import {
 } from "../../pages";
 import { withCheckAuthorization, withCheckRole } from "../../hocs";
 import { useAuthorization } from "../../hooks";
-
-enum ROLE {
-  ADMIN = "Admin",
-  TEACHER = "Teacher",
-  STUDENT = "Student"
-}
+import { ROLE } from "../../models/user";
 
 interface IProps {}
 

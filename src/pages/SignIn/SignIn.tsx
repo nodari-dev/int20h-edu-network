@@ -26,10 +26,25 @@ export const SignIn: FC<IProps> = (): JSX.Element => {
           email: "daniel.hrovinsky@gmail.com",
           name: "Daniel",
           lastName: "Hrovinskyi",
-          region: {
-            name: "North",
-          },
           role: "Admin",
+        });
+        navigate("/");
+      } else if ((values.email === "nodar@neuk.com") && (values.password === "duck")) {
+        setAuthorization({
+          id: 1,
+          email: "nodar@neuk.com",
+          name: "Nodar",
+          lastName: "Neuk",
+          role: "Student",
+        });
+        navigate("/");
+      } else if ((values.email === "den@uk.com") && (values.password === "duck")) {
+        setAuthorization({
+          id: 1,
+          email: "den@uk.com",
+          name: "Den",
+          lastName: "Tvardovskyi",
+          role: "Teacher",
         });
         navigate("/");
       } else {

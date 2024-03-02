@@ -51,7 +51,6 @@ export const System: FC<IProps> = ({ children }: IProps): JSX.Element => {
   const [ hasBreakPoint, setBreakPoint ] = useState(false);
   const { t } = useTranslation();
   const location = useLocation();
-  const navigate = useNavigate();
   const { resetAuthorization } = useAuthorization();
 
   const langOptions: { value: string, label: string }[] = Object.keys(LANGUAGES)

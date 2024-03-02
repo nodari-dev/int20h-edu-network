@@ -3,6 +3,7 @@ import { useStore } from "./useStore";
 import { RST_AUTHORIZATION, SET_AUTHORIZATION, SET_USER } from "../store/authorization/authorization.actions";
 import { useLoader } from "./useLoader";
 import { IUser } from "../models";
+import { useNavigate } from "react-router-dom";
 
 type TUseAuthorization = () => {
   isAuthorized: boolean;
@@ -33,6 +34,7 @@ export const useAuthorization: TUseAuthorization = () => {
     const ref = setTimeout(() => {
       dispatch({ type: RST_AUTHORIZATION });
       logout.stop();
+      window.open("/sign-in", "_self");
       clearTimeout(ref);
     }, 1000);
   };

@@ -5,11 +5,14 @@ export interface IUser {
   updatedAt?: string;
   name: string;
   lastName: string;
-  region: {
-    name: string;
-  }
   role: Role | null;
 }
 
 
-export type Role = "Admin" | "Teacher" | "Student"
+export type Role = "Admin" | "Teacher" | "Student";
+
+export enum ROLE {
+  ADMIN = "Admin",
+  TEACHER = "Teacher",
+  STUDENT = "Student"
+}
