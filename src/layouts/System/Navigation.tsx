@@ -70,13 +70,13 @@ export const Navigation: FC<IProps> = ({ role }: IProps): JSX.Element => {
 			getItem(<Link to="/newsletter/create">{t("sidebar.create")}</Link>, "/newsletter/create"),
 		]),
 		getItem(<Link to="/calendar">Календар</Link>, "/calendar", <CalendarOutlined />),
-		getItem(<Link to="/subjects">Предмети</Link>, "/subjects", <FundOutlined/>),
+		getItem(<Link to="/subjects/all">Предмети</Link>, "/subjects", <FundOutlined/>),
 		getItem('Завдання', "/assignments", <CarryOutOutlined />, [
-			getItem(<Link to="/assignments">Усі</Link>, "/assignments"),
+			getItem(<Link to="/assignments/all">Усі</Link>, "/assignments"),
 			getItem(<Link to="/assignments/create">Створити</Link>, "/assignments/create")
 		]),
 		getItem(<Link to="/journal">Журнал</Link>, "/journal", <BookOutlined/>),
-		getItem(<Link to="/question">Запитання</Link>, "/questions", <MessageOutlined /> ),
+		getItem(<Link to="/questions">Запитання</Link>, "/questions", <MessageOutlined /> ),
 	];
 
 	const userLinks = {
