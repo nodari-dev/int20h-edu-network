@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 import {Role} from "../../models/user";
 
 interface IProps {
-	role: Role
+	role: Role | null
 }
 
 export const Navigation: FC<IProps> = ({ role }: IProps): JSX.Element => {
@@ -41,9 +41,9 @@ export const Navigation: FC<IProps> = ({ role }: IProps): JSX.Element => {
 			getItem(<Link to="/students/all">Усі</Link>, "/students/all"),
 			getItem(<Link to="/students/create">Створити</Link>, "/students/create"),
 		]),
-		getItem(<Link to="/teachers">Вчителі</Link>, "/teacher", <UserOutlined />, [
+		getItem(<Link to="/teachers">Вчителі</Link>, "/teachers", <UserOutlined />, [
 			getItem(<Link to="/teachers/all">Усі</Link>, "/teacher/all"),
-			getItem(<Link to="/teachers/create">Створити</Link>, "/teacher/create"),
+			getItem(<Link to="/teachers/create">Створити</Link>, "/teachers/create"),
 		]),
 		getItem(t("sidebar.groups"), "/group", <TeamOutlined />, [
 			getItem(<Link to="/group/all">{t("sidebar.all")}</Link>, "/group/all"),
