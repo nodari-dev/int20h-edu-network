@@ -3,6 +3,7 @@ import { Descriptions, Flex, Skeleton } from "antd";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { gql, useLazyQuery } from "@apollo/client";
+import Title from "antd/es/typography/Title";
 
 interface IProps {}
 
@@ -77,6 +78,15 @@ export const Student: FC<IProps> = (): JSX.Element => {
             );
           })}
         </Descriptions>
+
+        <Title level={5}>Grades (N/a)</Title>
+        <div>add</div>
+
+        <Title level={5}>Subjects (N/a)</Title>
+        <div>add</div>
+
+        <Title level={5}>Assignments (N/a)</Title>
+        <div>add</div>
       </Skeleton>
     </Flex>
   );

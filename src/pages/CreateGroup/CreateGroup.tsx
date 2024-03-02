@@ -129,6 +129,11 @@ export const CreateGroup: FC<IProps> = (): JSX.Element => {
             >
               <Select mode="multiple" allowClear options={INSTITUTES} />
             </Form.Item>
+            <Flex gap={"small"} vertical style={{ width: "100%" }}>
+              <Form.Item>
+                <Button htmlType="submit">{t("Schedule")}</Button>
+              </Form.Item>
+            </Flex>
           </Form>
         </Col>
       </Row>
