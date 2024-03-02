@@ -36,6 +36,7 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
   const [ groups, setGroups ] = useState<any[]>([]);
   const [ executeSearch ] = useLazyQuery(EXCHANGE_RATES);
   const [ create ] = useMutation(groupCreate);
+  const [ editor, setEditor ] = useState<any>(undefined);
   const handleCreate = (body: any) => {
     create({
       variables: {
@@ -54,7 +55,7 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
 
   useEffect(() => {
     executeSearch().then((data) => {
-      setGroups(data.data.userGroups.map(({ id, title, usersPhoneNumbers }:any) => ({
+      setGroups(data.data.userGroups.map(({ id, title, usersPhoneNumbers }: any) => ({
         value: id,
         label: title + ` (${usersPhoneNumbers.length})`,
         data: usersPhoneNumbers,
@@ -77,16 +78,15 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
   return (
     <Flex gap="small" vertical>
       <Form
-          layout="vertical"
-          onFinish={handleCreate}
-          initialValues={initialValues}
+        layout="vertical"
+        onFinish={handleCreate}
+        initialValues={initialValues}
       >
         <Title>Create newsletter</Title>
-
         <Form.Item name="group" label="Group" rules={[ { required: true } ]}>
           <Select
-              placeholder="Select a group"
-              allowClear
+            placeholder="Select a group"
+            allowClear
           >
             {groups.map(({ value, label }) => {
               return <Option value={value}>{label}</Option>;
@@ -94,13 +94,13 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
 
           </Select>
         </Form.Item>
-        <Form.Item required name="text" label="Content" rules={[ { required: true } ]}>
-          <EditorDeezNuts/>
+        <Form.Item required name="text" label="Content">
+          <EditorDeezNuts onChange={setEditor} state={editor} />
         </Form.Item>
         <Form.Item name="triggerAt" label="Schedule Time" rules={[ { required: true } ]}>
           <DatePicker
-              disabledDate={disabledDate}
-              showTime format="YYYY-MM-DD HH:mm:ss"
+            disabledDate={disabledDate}
+            showTime format="YYYY-MM-DD HH:mm:ss"
           />
         </Form.Item>
         <Flex gap={"small"} vertical style={{ width: "100%" }}>

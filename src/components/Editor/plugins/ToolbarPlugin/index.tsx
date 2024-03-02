@@ -1070,28 +1070,6 @@ export default function ToolbarPlugin({
               <span className="text">Inline Image</span>
             </DropDownItem>
             <DropDownItem
-              onClick={() =>
-                insertGifOnClick({
-                  altText: 'Cat typing on a laptop',
-                  src: catTypingGif,
-                })
-              }
-              className="item">
-              <i className="icon gif" />
-              <span className="text">GIF</span>
-            </DropDownItem>
-            <DropDownItem
-              onClick={() => {
-                activeEditor.dispatchCommand(
-                  INSERT_EXCALIDRAW_COMMAND,
-                  undefined,
-                );
-              }}
-              className="item">
-              <i className="icon diagram-2" />
-              <span className="text">Excalidraw</span>
-            </DropDownItem>
-            <DropDownItem
               onClick={() => {
                 showModal('Insert Table', (onClose) => (
                   <InsertTableDialog
@@ -1129,40 +1107,6 @@ export default function ToolbarPlugin({
               className="item">
               <i className="icon columns" />
               <span className="text">Columns Layout</span>
-            </DropDownItem>
-
-            <DropDownItem
-              onClick={() => {
-                showModal('Insert Equation', (onClose) => (
-                  <InsertEquationDialog
-                    activeEditor={activeEditor}
-                    onClose={onClose}
-                  />
-                ));
-              }}
-              className="item">
-              <i className="icon equation" />
-              <span className="text">Equation</span>
-            </DropDownItem>
-            <DropDownItem
-              onClick={() => {
-                editor.update(() => {
-                  const root = $getRoot();
-                  const stickyNode = $createStickyNode(0, 0);
-                  root.append(stickyNode);
-                });
-              }}
-              className="item">
-              <i className="icon sticky" />
-              <span className="text">Sticky Note</span>
-            </DropDownItem>
-            <DropDownItem
-              onClick={() => {
-                editor.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, undefined);
-              }}
-              className="item">
-              <i className="icon caret-right" />
-              <span className="text">Collapsible container</span>
             </DropDownItem>
             {EmbedConfigs.map((embedConfig) => (
               <DropDownItem

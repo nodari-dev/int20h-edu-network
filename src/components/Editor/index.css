@@ -684,7 +684,7 @@ i.page-break,
   display: block;
   position: fixed;
   box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  inset 0 0 0 1px rgba(255, 255, 255, 0.5);
   border-radius: 8px;
   min-height: 40px;
   background-color: #fff;
@@ -1401,10 +1401,15 @@ button.action-button:disabled {
   border-top-right-radius: 10px;
   vertical-align: middle;
   overflow: auto;
-  height: 36px;
+  height: 48px;
   position: sticky;
   top: 0;
   z-index: 2;
+  align-items: center;
+}
+
+.font-size-input {
+  width: auto;
 }
 
 button.toolbar-item {
