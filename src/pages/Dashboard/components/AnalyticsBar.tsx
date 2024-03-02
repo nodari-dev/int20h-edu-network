@@ -26,7 +26,7 @@ export const AnalyticsBar: FC<IProps> = ({ data }: any) => {
               {data?.length}
             </Title>
           </Card>
-        </Col>,
+        </Col>
       </Row>
     </Skeleton>
   );
