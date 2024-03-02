@@ -1,0 +1,89 @@
+import { FC } from "react";
+import {Menu} from "antd";
+import React from "react";
+import {Link, useLocation} from "react-router-dom";
+import {AppstoreOutlined, BookOutlined, FundOutlined, CalendarOutlined, MessageOutlined, CarryOutOutlined  ,MailOutlined, TeamOutlined, UserOutlined} from "@ant-design/icons";
+import {useTranslation} from "react-i18next";
+import {IUser} from "../../models";
+
+interface IProps {
+	user: IUser
+}
+
+export const Navigation: FC<IProps> = ({ user }: IProps): JSX.Element => {
+	const location = useLocation();
+	const {t} = useTranslation();
+
+	function getItem(
+			label: React.ReactNode,
+			key?: React.Key | null,
+			icon?: React.ReactNode,
+			children?: MenuItem[],
+	): MenuItem {
+		return {
+			key,
+			icon,
+			children,
+			label,
+		} as MenuItem;
+	}
+
+	const studentLinks = [
+		getItem(<Link to="/">{t("sidebar.dashboard")}</Link>, "/", <AppstoreOutlined/>),
+		getItem(<Link to="/subjects">Предмети</Link>, "/subjects", <FundOutlined/>),
+		getItem(<Link to="/calendar">Календар</Link>, "/calendar", <CalendarOutlined />),
+		getItem(<Link to="/assignments">Завдання</Link>, "/assignments", <CarryOutOutlined />)
+	];
+
+	const adminLinks = [
+		getItem(<Link to="/">{t("sidebar.dashboard")}</Link>, "/", <AppstoreOutlined />),
+		getItem(<Link to="/students">Учні</Link>, "/users", <UserOutlined />, [
+			getItem(<Link to="/students">Усі</Link>, "/users/create"),
+				getItem(<Link to="/students/create">Створити</Link>, "/users/create"),
+		]),
+		getItem(t("sidebar.groups"), "/group", <TeamOutlined />, [
+			getItem(<Link to="/group/all">{t("sidebar.all")}</Link>, "/group/all"),
+			getItem(<Link to="/group/create">{t("sidebar.create")}</Link>, "/group/create"),
+		]),
+		getItem(<Link to="/analytics">{t("sidebar.analytics")}</Link>, "/analytics", <FundOutlined />),
+		getItem(t("sidebar.newsletter"), "/newsletter", <MailOutlined />, [
+			getItem(<Link to="/newsletter/all">{t("sidebar.all")}</Link>, "/newsletter/all"),
+			getItem(<Link to="/newsletter/create">{t("sidebar.create")}</Link>, "/newsletter/create"),
+		]),
+	];
+
+	const teacherLinks = [
+		getItem(<Link to="/">{t("sidebar.dashboard")}</Link>, "/", <AppstoreOutlined />),
+		getItem(<Link to="/users">Учні</Link>, "/users", <UserOutlined />),
+		getItem(t("sidebar.groups"), "/group/all", <TeamOutlined />),
+		getItem(<Link to="/analytics">{t("sidebar.analytics")}</Link>, "/analytics", <FundOutlined />),
+		getItem(t("sidebar.newsletter"), "/newsletter", <MailOutlined />, [
+			getItem(<Link to="/newsletter/all">{t("sidebar.all")}</Link>, "/newsletter/all"),
+			getItem(<Link to="/newsletter/create">{t("sidebar.create")}</Link>, "/newsletter/create"),
+		]),
+		getItem(<Link to="/calendar">Календар</Link>, "/calendar", <CalendarOutlined />),
+		getItem(<Link to="/subjects">Предмети</Link>, "/subjects", <FundOutlined/>),
+		getItem(<Link to="/assignments">Завдання</Link>, "/assignments", <CarryOutOutlined />, [
+			getItem(<Link to="/assignments">Усі</Link>, "/assignments"),
+			getItem(<Link to="/assignments/create">Створити</Link>, "/assignments/create")
+		]),
+		getItem(<Link to="/journal">Журнал</Link>, "/journal", <BookOutlined/>),
+		getItem(<Link to="/question">Запитання</Link>, "/questions", <MessageOutlined /> ),
+	];
+
+	const userLinks = {
+		Admin: adminLinks,
+		Teacher: teacherLinks,
+		Student: studentLinks
+	};
+
+	return (
+			<Menu
+			mode="inline"
+			defaultSelectedKeys={[ location.pathname ]}
+			defaultOpenKeys={[
+				"" + userLinks["Admin"].filter((link) => (location.pathname).split(link?.key as any).length === 2)?.[0]?.key || "",
+			]}
+			items={userLinks["Admin"]}
+	/>)
+}
