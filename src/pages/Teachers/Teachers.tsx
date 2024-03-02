@@ -6,6 +6,7 @@ import { gql, useLazyQuery } from "@apollo/client";
 import { useStudentsConfig } from "../Students/useStudentsConfig";
 import Title from "antd/es/typography/Title";
 import { SearchBar } from "../../components";
+import { ORDER_QUERY, TQuery } from "../../models/query";
 
 interface IProps {}
 // TODO: UPDATE
@@ -37,13 +38,6 @@ const EXCHANGE_RATES = gql`
   }
 }
 `;
-
-const ORDER_QUERY: { ascend: string, descend: string } = {
-  ascend: "ASC",
-  descend: "DESC",
-};
-
-type TQuery = "ascend" | "descend";
 
 export const Teachers: FC<IProps> = (): JSX.Element => {
   const navigate = useNavigate();

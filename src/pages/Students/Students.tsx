@@ -6,6 +6,7 @@ import { useStudentsConfig } from "./useStudentsConfig";
 import { useTranslation } from "react-i18next";
 import { gql, useLazyQuery } from "@apollo/client";
 import { SearchBar } from "../../components";
+import { ORDER_QUERY, TQuery } from "../../models/query";
 
 interface IProps {
 }
@@ -38,13 +39,6 @@ const EXCHANGE_RATES = gql`
   }
 }
 `;
-
-const ORDER_QUERY: { ascend: string, descend: string } = {
-  ascend: "ASC",
-  descend: "DESC",
-};
-
-type TQuery = "ascend" | "descend";
 
 export const Students: FC<IProps> = (): JSX.Element => {
   const navigate = useNavigate();
