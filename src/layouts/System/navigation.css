@@ -1,0 +1,41 @@
+.ant-menu-item-selected {
+    background-color: black !important;
+    color: white !important;
+}
+
+.ant-menu-submenu-selected > .ant-menu-submenu-title{
+    background-color: white;
+    color: black;
+}
+
+.ant-menu-submenu-selected > .ant-menu-title-content > a {
+    color: black !important;
+}
+
+.ant-menu-submenu-selected svg {
+    fill: #4E4040;
+}
+
+.ant-menu-submenu-selected span:nth-child(2) {
+    color: #4E4040;
+}
+
+.ant-menu-submenu-selected i::before {
+    color: #4E4040;
+}
+.ant-menu-submenu-selected i::after {
+    color: #4E4040;
+}
+
+.logo-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+}
+
+.logo{
+    width: 90px;
+    height: 90px;
+    z-index: 2;
+}
