@@ -102,6 +102,8 @@ export const CreateGroup: FC<IProps> = (): JSX.Element => {
           >
             <Title>{t("groups.createTitle")}</Title>
           </Form>
+        </Col>
+      </Row>
     </Flex>
   );
 };
