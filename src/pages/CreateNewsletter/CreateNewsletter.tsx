@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import TextArea from "antd/lib/input/TextArea";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+import EditorDeezNuts from "../../components/Editor/EditorDeezNuts";
 
 const { Option } = Select;
 
@@ -75,43 +76,39 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
 
   return (
     <Flex gap="small" vertical>
-      <Row gutter={[ 24, 24 ]} justify={"center"}>
-        <Col xs={24} sm={24} md={24} lg={16} xl={8}>
-          <Form
-            layout="vertical"
-            onFinish={handleCreate}
-            initialValues={initialValues}
+      <Form
+          layout="vertical"
+          onFinish={handleCreate}
+          initialValues={initialValues}
+      >
+        <Title>Create newsletter</Title>
+
+        <Form.Item name="group" label="Group" rules={[ { required: true } ]}>
+          <Select
+              placeholder="Select a group"
+              allowClear
           >
-            <Title>Create newsletter</Title>
+            {groups.map(({ value, label }) => {
+              return <Option value={value}>{label}</Option>;
+            })}
 
-            <Form.Item name="group" label="Group" rules={[ { required: true } ]}>
-              <Select
-                placeholder="Select a group"
-                allowClear
-              >
-                {groups.map(({ value, label }) => {
-                  return <Option value={value}>{label}</Option>;
-                })}
-
-              </Select>
-            </Form.Item>
-            <Form.Item required name="text" label="Content" rules={[ { required: true } ]}>
-              <TextArea rows={2} />
-            </Form.Item>
-            <Form.Item name="triggerAt" label="Schedule Time" rules={[ { required: true } ]}>
-              <DatePicker
-                disabledDate={disabledDate}
-                showTime format="YYYY-MM-DD HH:mm:ss"
-              />
-            </Form.Item>
-            <Flex gap={"small"} vertical style={{ width: "100%" }}>
-              <Form.Item>
-                <Button htmlType="submit">{t("Schedule")}</Button>
-              </Form.Item>
-            </Flex>
-          </Form>
-        </Col>
-      </Row>
+          </Select>
+        </Form.Item>
+        <Form.Item required name="text" label="Content" rules={[ { required: true } ]}>
+          <EditorDeezNuts/>
+        </Form.Item>
+        <Form.Item name="triggerAt" label="Schedule Time" rules={[ { required: true } ]}>
+          <DatePicker
+              disabledDate={disabledDate}
+              showTime format="YYYY-MM-DD HH:mm:ss"
+          />
+        </Form.Item>
+        <Flex gap={"small"} vertical style={{ width: "100%" }}>
+          <Form.Item>
+            <Button htmlType="submit">{t("Schedule")}</Button>
+          </Form.Item>
+        </Flex>
+      </Form>
     </Flex>
   );
 };
