@@ -90,8 +90,8 @@ export const Navigation: FC<IProps> = ({ role }: IProps): JSX.Element => {
 			mode="inline"
 			defaultSelectedKeys={[ location.pathname ]}
 			defaultOpenKeys={[
-				"" + userLinks["Admin"].filter((link) => (location.pathname).split(link?.key as any).length === 2)?.[0]?.key || "",
+				"" + userLinks[role].filter((link) => (location.pathname).split(link?.key as any).length === 2)?.[0]?.key || "",
 			]}
-			items={userLinks["Admin"]}
+			items={userLinks[role]}
 	/>)
 }
