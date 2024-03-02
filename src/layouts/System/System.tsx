@@ -1,22 +1,18 @@
 import React, { FC, useState } from "react";
 import {
-  AppstoreOutlined,
-  FundOutlined,
   LogoutOutlined,
-  MailOutlined,
   MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  TeamOutlined,
-  UserOutlined,
+  MenuUnfoldOutlined
 } from "@ant-design/icons";
-import { Avatar, Button, Flex, Layout, Menu, MenuProps, Select } from "antd";
+import { Avatar, Button, Flex, Layout, Select } from "antd";
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 import { useAuthorization } from "../../hooks";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { constants } from "../../styles/constants";
 import "./navigation.css";
 import { getInitials } from "../../utils";
+import {Navigation} from "./Navigation";
 
 const { Header, Content, Sider } = Layout;
 
@@ -29,28 +25,12 @@ interface IProps {
   children?: React.ReactNode | React.ReactNode[];
 }
 
-type MenuItem = Required<MenuProps>["items"][number];
-
-function getItem(
-  label: React.ReactNode,
-  key?: React.Key | null,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem;
-}
-
 export const System: FC<IProps> = ({ children }: IProps): JSX.Element => {
   const { user } = useAuthorization();
   const [ collapsed, setCollapsed ] = useState(false);
   const [ hasBreakPoint, setBreakPoint ] = useState(false);
   const { t } = useTranslation();
-  const location = useLocation();
+  const navigate = useNavigate();
   const { resetAuthorization } = useAuthorization();
 
   const langOptions: { value: string, label: string }[] = Object.keys(LANGUAGES)
@@ -59,20 +39,6 @@ export const System: FC<IProps> = ({ children }: IProps): JSX.Element => {
   const handleChange = (value: string) => {
     i18n.changeLanguage(value);
   };
-
-  const LINKS = [
-    getItem(<Link to="/">{t("sidebar.dashboard")}</Link>, "/", <AppstoreOutlined />),
-    getItem(<Link to="/users">{t("sidebar.users")}</Link>, "/users", <UserOutlined />),
-    getItem(t("sidebar.groups"), "/group", <TeamOutlined />, [
-      getItem(<Link to="/group/all">{t("sidebar.all")}</Link>, "/group/all"),
-      getItem(<Link to="/group/create">{t("sidebar.create")}</Link>, "/group/create"),
-    ]),
-    getItem(<Link to="/analytics">{t("sidebar.analytics")}</Link>, "/analytics", <FundOutlined />),
-    getItem(t("sidebar.newsletter"), "/newsletter", <MailOutlined />, [
-      getItem(<Link to="/newsletter/all">{t("sidebar.all")}</Link>, "/newsletter/all"),
-      getItem(<Link to="/newsletter/create">{t("sidebar.create")}</Link>, "/newsletter/create"),
-    ]),
-  ];
 
   return (
     <Layout>
@@ -99,15 +65,7 @@ export const System: FC<IProps> = ({ children }: IProps): JSX.Element => {
           </div>
 
           <Flex style={{ height: "100%" }} vertical justify="space-between">
-            <Menu
-              mode="inline"
-              defaultSelectedKeys={[ location.pathname ]}
-              defaultOpenKeys={[
-                "" + LINKS.filter((link) => (location.pathname).split(link?.key as any).length === 2)?.[0]?.key || "",
-              ]}
-              items={LINKS}
-            />
-
+            <Navigation role={user.role} />
             {collapsed
               ? <Button
                 style={{ margin: "0 4px 16px 4px", alignSelf: "center" }}
