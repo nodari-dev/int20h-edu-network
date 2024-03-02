@@ -62,7 +62,7 @@ const tableData: any = {
   registrationDate: "registrationDate",
 };
 
-export const User: FC<IProps> = (): JSX.Element => {
+export const Student: FC<IProps> = (): JSX.Element => {
   const { userId } = useParams();
   const { t } = useTranslation();
   const [ user, setUser ] = useState<any>();

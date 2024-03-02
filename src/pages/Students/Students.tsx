@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Button, Flex, Table, TableProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import Title from "antd/es/typography/Title";
-import { useUsersConfig } from "./useUsersConfig";
+import { useStudentsConfig } from "./useStudentsConfig";
 import { useTranslation } from "react-i18next";
 import { gql, useLazyQuery } from "@apollo/client";
 import { SearchBar } from "../../components";
@@ -47,7 +47,7 @@ const ORDER_QUERY: { ascend: string, descend: string } = {
 
 type TQuery = "ascend" | "descend";
 
-export const Users: FC<IProps> = (): JSX.Element => {
+export const Students: FC<IProps> = (): JSX.Element => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [ total, setTotal ] = useState<number>();
@@ -82,7 +82,7 @@ export const Users: FC<IProps> = (): JSX.Element => {
       <Button onClick={() => navigate("/user/" + record.phoneNumber)}>{t("users.view")}</Button>
     );
   };
-  const config = useUsersConfig({ onView: renderView });
+  const config = useStudentsConfig({ onView: renderView });
 
   const handleSearch = (v: string) => {
     setSearch(v);

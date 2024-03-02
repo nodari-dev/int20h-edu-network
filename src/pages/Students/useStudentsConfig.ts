@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-export const useUsersConfig: any = ({ onView }: any) => {
+export const useStudentsConfig: any = ({ onView }: any) => {
   const { t } = useTranslation();
   return (
     [

@@ -1,0 +1,1 @@
+export { CreateTeacher } from "./CreateTeacher";

@@ -1,31 +1,59 @@
 import { AccessDenied } from "./AccessDenied";
+import { Analytics } from "./Analytics";
+import { Assignment } from "./Assignment";
+import { Assignments } from "./Assignments";
+import { Calendar } from "./Calendar";
+import { CreateAssignment } from "./CreateAssignment";
 import { CreateGroup } from "./CreateGroup";
+import { CreateNewsletter } from "./CreateNewsletter";
+import { CreateStudent } from "./CreateStudent";
+import { CreateTeacher } from "./CreateTeacher";
+import { CreateSubject } from "./CreateSubject";
+import { Dashboard } from "./Dashboard";
 import { Group } from "./Group";
 import { Groups } from "./Groups";
-import { User } from "./User";
-import { Users } from "./Users";
-import { Analytics } from "./Analytics";
-import { Profile } from "./Profile";
-import { Dashboard } from "./Dashboard";
-import { NotFound } from "./NotFound";
-import { SignIn } from "./SignIn";
-import { Newsletters } from "./Newsletters";
+import { Journals } from "./Journals";
 import { Newsletter } from "./Newsletter";
-import { CreateNewsletter } from "./CreateNewsletter";
+import { Newsletters } from "./Newsletters";
+import { NotFound } from "./NotFound";
+import { Profile } from "./Profile";
+import { Question } from "./Question";
+import { Questions } from "./Questions";
+import { SignIn } from "./SignIn";
+import { Student } from "./Student";
+import { Students } from "./Students";
+import { Subject } from "./Subject";
+import { Subjects } from "./Subjects";
+import { Teacher } from "./Teacher";
+import { Teachers } from "./Teachers";
 
 export {
   AccessDenied,
+  Analytics,
+  Assignment,
+  Assignments,
+  Calendar,
+  CreateAssignment,
   CreateGroup,
+  CreateNewsletter,
+  CreateStudent,
+  CreateTeacher,
+  CreateSubject,
   Dashboard,
   Group,
   Groups,
+  Journals,
+  Newsletter,
+  Newsletters,
   NotFound,
   Profile,
+  Question,
+  Questions,
   SignIn,
-  User,
-  Users,
-  Newsletters,
-  Newsletter,
-  Analytics,
-  CreateNewsletter,
+  Student,
+  Students,
+  Subject,
+  Subjects,
+  Teacher,
+  Teachers,
 };

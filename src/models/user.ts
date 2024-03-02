@@ -8,5 +8,8 @@ export interface IUser {
   region: {
     name: string;
   }
-  role: "Admin" | "SuperAdmin" | null;
+  role: Role | null;
 }
+
+
+export type Role = "Admin" | "Teacher" | "Student"
