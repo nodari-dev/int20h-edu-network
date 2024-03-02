@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const EXCHANGE_RATES = gql`
-  query users($search: String!, $pageSize: Int, $offset: Int, $sorters: [UserEntitySortInput!] ) {
+  query users($search: String!, $pageSize: Int, $offset: Int, $sorters: [UserDtoSortInput!] ) {
   pagedUsers(
     skip: $offset
     take: $pageSize
@@ -29,12 +29,11 @@ const EXCHANGE_RATES = gql`
     totalCount
     items {
       age
-      botTypes
+      email
       fullName
       phoneNumber
-      region
-      registrationDate
-      type
+      id
+      role
     }
   }
 }
@@ -79,7 +78,7 @@ export const Students: FC<IProps> = (): JSX.Element => {
 
   const renderView = (record: any) => {
     return (
-      <Button onClick={() => navigate("/user/" + record.phoneNumber)}>{t("users.view")}</Button>
+      <Button onClick={() => navigate("/students/" + record.id)}>{t("users.view")}</Button>
     );
   };
   const config = useStudentsConfig({ onView: renderView });

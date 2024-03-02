@@ -9,7 +9,7 @@ interface IProps {}
 
 const GROUP = gql`
   query pagedUserGroups($id: UUID!) {
-  pagedUserGroups(
+  pagedGroups(
     where: {
       id: {eq: $id}
     }
@@ -18,8 +18,14 @@ const GROUP = gql`
     items {
       title
       id
-      usersPhoneNumbers
-      usersPhoneNumbersCount
+      users {
+       age
+      email
+      fullName
+      phoneNumber
+      id
+      role
+      }
     }
   }
 }
@@ -35,20 +41,37 @@ export const Group: FC<IProps> = (): JSX.Element => {
   useEffect(() => {
     if (groupId) {
       executeSearch({ variables: { id: groupId } }).then((data) => {
-        setGroupData(data.data.pagedUserGroups.items[0]);
+        setGroupData(data.data.pagedGroups.items[0]);
       });
     }
   }, [ groupId ]);
 
-  const items:any[] = groupData
-    ? groupData.usersPhoneNumbers.map((i:any) => ({ phoneNumber: i }))
-    : [];
-
   const config: any = [
     {
-      title: "ID",
+      title: "Full Name",
+      dataIndex: "fullName",
+      key: "fullName",
+    },
+    {
+      title: "Phone Number",
       dataIndex: "phoneNumber",
+      align: "left",
       key: "phoneNumber",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Institute",
+      dataIndex: "institute",
+      key: "institute",
     },
     {
       title: t("users.actions"),
@@ -58,7 +81,7 @@ export const Group: FC<IProps> = (): JSX.Element => {
       width: "100px",
       align: "center",
       render: (record: any) => <Button
-        onClick={() => navigate("/user/" + record.phoneNumber)}
+        onClick={() => navigate("/students/" + record.id)}
       >{t("users.view")}</Button>,
     },
   ];
@@ -67,12 +90,15 @@ export const Group: FC<IProps> = (): JSX.Element => {
     <Flex vertical>
       <Skeleton loading={!groupData} active={true}>
         <Title level={3}>{groupData?.title}</Title>
-        <Title level={5}>Users ({groupData?.usersPhoneNumbersCount})</Title>
+        <Title level={5}>Students ({groupData?.users.length})</Title>
         <Table
           columns={config}
-          dataSource={items}
-          pagination={{ total: groupData?.usersPhoneNumbersCount }}
+          dataSource={groupData?.users as any || []}
+          pagination={{ total: groupData?.users.length }}
         />
+
+        <Title level={5}>Subjects (N/a)</Title>
+        <div>add</div>
       </Skeleton>
     </Flex>
   );

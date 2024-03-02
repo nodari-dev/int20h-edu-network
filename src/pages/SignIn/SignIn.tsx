@@ -26,7 +26,7 @@ export const SignIn: FC<IProps> = (): JSX.Element => {
           email: "daniel.hrovinsky@gmail.com",
           name: "Daniel",
           lastName: "Hrovinskyi",
-          role: "Admin",
+          role: "ADMIN",
         });
         navigate("/");
       } else if ((values.email === "nodar@neuk.com") && (values.password === "duck")) {
@@ -35,7 +35,7 @@ export const SignIn: FC<IProps> = (): JSX.Element => {
           email: "nodar@neuk.com",
           name: "Nodar",
           lastName: "Neuk",
-          role: "Student",
+          role: "STUDENT",
         });
         navigate("/");
       } else if ((values.email === "den@uk.com") && (values.password === "duck")) {
@@ -44,7 +44,7 @@ export const SignIn: FC<IProps> = (): JSX.Element => {
           email: "den@uk.com",
           name: "Den",
           lastName: "Tvardovskyi",
-          role: "Teacher",
+          role: "TEACHER",
         });
         navigate("/");
       } else {

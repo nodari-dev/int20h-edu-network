@@ -9,10 +9,10 @@ export interface IUser {
 }
 
 
-export type Role = "Admin" | "Teacher" | "Student";
+export type Role = "ADMIN" | "TEACHER" | "STUDENT";
 
 export enum ROLE {
-  ADMIN = "Admin",
-  TEACHER = "Teacher",
-  STUDENT = "Student"
+  ADMIN = "ADMIN",
+  TEACHER = "TEACHER",
+  STUDENT = "STUDENT"
 }

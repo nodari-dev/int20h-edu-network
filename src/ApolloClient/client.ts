@@ -1,7 +1,7 @@
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from "@apollo/client";
 
 const httpLink = new HttpLink({
-    uri: "",
+    uri: "https://jwp-team.com/backend/graphql/",
 });
 
 export const client = new ApolloClient({

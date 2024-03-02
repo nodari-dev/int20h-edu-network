@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 const EXCHANGE_RATES = gql`
   query pagedUserGroups($pageSize: Int, $offset: Int ) {
-  pagedUserGroups(
+  pagedGroups(
     skip: $offset
     take: $pageSize
   ) {
@@ -19,7 +19,9 @@ const EXCHANGE_RATES = gql`
     items {
       id
       title
-      usersPhoneNumbers
+      users {
+         id
+      }
     }
   }
 }
@@ -51,7 +53,7 @@ export const Groups: FC<IProps> = (): JSX.Element => {
     }
 
     executeSearch({ variables }).then((res) => {
-      setTotal(res.data.pagedUserGroups.totalCount);
+      setTotal(res.data.pagedGroups.totalCount);
     });
   }, [ params ]);
 
@@ -68,8 +70,8 @@ export const Groups: FC<IProps> = (): JSX.Element => {
     },
     {
       title: t("groups.users"),
-      dataIndex: "usersPhoneNumbersCount",
-      key: "usersPhoneNumbersCount",
+      dataIndex: "users",
+      key: "users",
     },
     {
       title: t("groups.actions"),

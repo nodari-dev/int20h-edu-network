@@ -80,9 +80,9 @@ export const Navigation: FC<IProps> = ({ role }: IProps): JSX.Element => {
 	];
 
 	const userLinks = {
-		Admin: adminLinks,
-		Teacher: teacherLinks,
-		Student: studentLinks
+		ADMIN: adminLinks,
+		TEACHER: teacherLinks,
+		STUDENTS: studentLinks
 	};
 
 	return (

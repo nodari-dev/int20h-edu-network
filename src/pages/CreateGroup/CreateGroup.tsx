@@ -18,13 +18,12 @@ export const CreateGroup: FC<IProps> = (): JSX.Element => {
   const usersGQL = gql`
       query Users($where: UserEntityFilterInput, $order: [UserEntitySortInput!]) {
         users(where: $where, order: $order) {
-          phoneNumber
-          fullName
           age
-          region
-          type
-          registrationDate
-          botTypes
+          email
+          fullName
+          phoneNumber
+          id
+          role
         }
       }
   `;

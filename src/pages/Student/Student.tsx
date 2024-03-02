@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Descriptions, Flex, Skeleton, Table } from "antd";
-import Title from "antd/es/typography/Title";
+import { Descriptions, Flex, Skeleton } from "antd";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { gql, useLazyQuery } from "@apollo/client";
@@ -11,42 +10,17 @@ const USER = gql`
   query users($id: String!) {
   pagedUsers(
     where: {
-      phoneNumber: {eq: $id}
+      id: {eq: $id}
     }
   ) {
     totalCount
     items {
       age
-      botTypes
+      email
       fullName
       phoneNumber
-      region
-      registrationDate
-      type
-    }
-  }
-}
-`;
-
-const USER_MSG = gql`
-  query pagedUserMessages($id: String!, $pageSize: Int, $offset: Int) {
-  pagedUserMessages(
-    skip: $offset
-    take: $pageSize
-    where: {
-      userPhoneNumber: {eq: $id}
-    }
-  ) {
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-    }
-    totalCount
-    items {
-      botType
-      isQuestion
-      text
-      timestamp
+      id
+      role
     }
   }
 }
@@ -66,38 +40,12 @@ export const Student: FC<IProps> = (): JSX.Element => {
   const { userId } = useParams();
   const { t } = useTranslation();
   const [ user, setUser ] = useState<any>();
-  const [ userMSG, setUserMSG ] = useState<any>();
   const [ executeSearch ] = useLazyQuery(USER);
-  const [ executeUserMSG ] = useLazyQuery(USER_MSG);
-  const [ total, setTotal ] = useState<number>();
-  const [ params, setParams ] = useState<any>({
-    pagination: {
-      page: 1,
-      pageSize: 10,
-    },
-    sorters: {},
-  });
-
-  useEffect(() => {
-    const variables: any = {
-      id: userId,
-      pageSize: params.pagination.pageSize,
-      offset: params.pagination.pageSize * (params.pagination.page - 1),
-    };
-
-    executeUserMSG({ variables }).then((res) => {
-      setUserMSG(res.data.pagedUserMessages.items);
-      setTotal(res.data.pagedUserMessages.totalCount);
-    });
-  }, [ params ]);
 
   useEffect(() => {
     if (userId) {
       executeSearch({ variables: { id: userId } }).then((data) => {
         setUser(data.data.pagedUsers.items[0]);
-      });
-      executeUserMSG({ variables: { id: userId } }).then((data) => {
-        setUserMSG(data.data.pagedUserMessages.items);
       });
     }
   }, [ userId ]);
@@ -109,35 +57,6 @@ export const Student: FC<IProps> = (): JSX.Element => {
       children: user[key],
     }))
     : [];
-
-  const config: any = [
-    {
-      title: "is Question",
-      dataIndex: "isQuestion",
-      key: "isQuestion",
-      render: (record:any) => record ? "Yes" : "No",
-    },
-    {
-      title: "Bot Type",
-      dataIndex: "botType",
-      key: "botType",
-    },
-    {
-      title: "Text",
-      dataIndex: "text",
-      key: "text",
-    },
-    {
-      title: "Timestamp",
-      dataIndex: "timestamp",
-      key: "timestamp",
-      render: (record:any) => (new Date(record)).toLocaleString(),
-    },
-  ];
-
-  const onPaginationChange = (page: number, pageSize: number): void => {
-    setParams({ ...params, pagination: { page, pageSize } });
-  };
 
   return (
     <Flex gap="small" vertical>
@@ -160,14 +79,6 @@ export const Student: FC<IProps> = (): JSX.Element => {
             );
           })}
         </Descriptions>
-
-        <Title level={5}>Messages</Title>
-        <Table
-          loading={!userMSG?.length}
-          columns={config}
-          dataSource={userMSG || []}
-          pagination={{ ...params.pagination, total, onChange: onPaginationChange }}
-        />
       </Skeleton>
     </Flex>
   );

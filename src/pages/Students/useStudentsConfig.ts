@@ -16,25 +16,24 @@ export const useStudentsConfig: any = ({ onView }: any) => {
         key: "phoneNumber",
       },
       {
-        title: t("users.bot"),
-        dataIndex: "botTypes",
-        key: "botTypes",
-        render: (record: any) => record.join(", "),
-      },
-      {
         title: "Age",
         dataIndex: "age",
         key: "age",
       },
       {
-        title: t("users.region"),
-        dataIndex: "region",
-        key: "region",
+        title: "Email",
+        dataIndex: "email",
+        key: "email",
       },
       {
-        title: "Type",
-        dataIndex: "type",
-        key: "type",
+        title: "Institute",
+        dataIndex: "institute",
+        key: "institute",
+      },
+      {
+        title: "Group",
+        dataIndex: "group",
+        key: "group",
       },
       {
         title: t("users.actions"),
