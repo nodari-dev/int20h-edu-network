@@ -37,11 +37,11 @@ export const Navigation: FC<IProps> = ({ role }: IProps): JSX.Element => {
 
 	const adminLinks = [
 		getItem(<Link to="/">{t("sidebar.dashboard")}</Link>, "/", <AppstoreOutlined />),
-		getItem(<Link to="/students">Учні</Link>, "/students", <UserOutlined />, [
+		getItem("Учні", "/students", <UserOutlined />, [
 			getItem(<Link to="/students/all">Усі</Link>, "/students/all"),
 			getItem(<Link to="/students/create">Створити</Link>, "/students/create"),
 		]),
-		getItem(<Link to="/teachers">Вчителі</Link>, "/teachers", <UserOutlined />, [
+		getItem("Вчителі","/teachers", <UserOutlined />, [
 			getItem(<Link to="/teachers/all">Усі</Link>, "/teacher/all"),
 			getItem(<Link to="/teachers/create">Створити</Link>, "/teachers/create"),
 		]),
@@ -54,7 +54,7 @@ export const Navigation: FC<IProps> = ({ role }: IProps): JSX.Element => {
 			getItem(<Link to="/newsletter/all">{t("sidebar.all")}</Link>, "/newsletter/all"),
 			getItem(<Link to="/newsletter/create">{t("sidebar.create")}</Link>, "/newsletter/create"),
 		]),
-		getItem(<Link to="/subjects">Предмети</Link>, "/subjects", <FundOutlined/>, [
+		getItem("Предмети", "/subjects", <FundOutlined/>, [
 			getItem(<Link to="/subjects/all">{t("sidebar.all")}</Link>, "/subjects/all"),
 			getItem(<Link to="/subjects/create">{t("sidebar.create")}</Link>, "/subjects/create"),
 		]),
@@ -62,8 +62,8 @@ export const Navigation: FC<IProps> = ({ role }: IProps): JSX.Element => {
 
 	const teacherLinks = [
 		getItem(<Link to="/">{t("sidebar.dashboard")}</Link>, "/", <AppstoreOutlined />),
-		getItem(<Link to="/users">Учні</Link>, "/users", <UserOutlined />),
-		getItem(t("sidebar.groups"), "/group/all", <TeamOutlined />),
+		getItem(<Link to="/students/all">Учні</Link>, "/users", <UserOutlined />),
+		getItem(<Link to="/group/all">{t("sidebar.groups")}</Link>, "/group/all", <TeamOutlined />),
 		getItem(<Link to="/analytics">{t("sidebar.analytics")}</Link>, "/analytics", <FundOutlined />),
 		getItem(t("sidebar.newsletter"), "/newsletter", <MailOutlined />, [
 			getItem(<Link to="/newsletter/all">{t("sidebar.all")}</Link>, "/newsletter/all"),
@@ -71,7 +71,7 @@ export const Navigation: FC<IProps> = ({ role }: IProps): JSX.Element => {
 		]),
 		getItem(<Link to="/calendar">Календар</Link>, "/calendar", <CalendarOutlined />),
 		getItem(<Link to="/subjects">Предмети</Link>, "/subjects", <FundOutlined/>),
-		getItem(<Link to="/assignments">Завдання</Link>, "/assignments", <CarryOutOutlined />, [
+		getItem('Завдання', "/assignments", <CarryOutOutlined />, [
 			getItem(<Link to="/assignments">Усі</Link>, "/assignments"),
 			getItem(<Link to="/assignments/create">Створити</Link>, "/assignments/create")
 		]),
