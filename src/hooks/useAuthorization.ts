@@ -33,7 +33,7 @@ export const useAuthorization: TUseAuthorization = () => {
     const ref = setTimeout(() => {
       dispatch({ type: RST_AUTHORIZATION });
       logout.stop();
-      window.open("/sign-in", "_self");
+      window.open("/#/sign-in", "_self");
       clearTimeout(ref);
     }, 1000);
   };
