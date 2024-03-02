@@ -95,7 +95,7 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
 
               </Select>
             </Form.Item>
-            <Form.Item required name="text" label={"content"} rules={[ { required: true } ]}>
+            <Form.Item required name="text" label="Content" rules={[ { required: true } ]}>
               <TextArea rows={2} />
             </Form.Item>
             <Form.Item name="triggerAt" label="Schedule Time" rules={[ { required: true } ]}>

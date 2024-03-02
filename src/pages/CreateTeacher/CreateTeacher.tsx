@@ -72,11 +72,11 @@ export const CreateTeacher: FC<IProps> = (): JSX.Element => {
             <Form.Item
               name="institute"
               label="Institute"
-              rules={[ { required: true, message: "Please select your favourite colors!", type: "array" } ]}
+              rules={[ { required: true, type: "array" } ]}
             >
               <Select mode="multiple" allowClear options={INSTITUTES} />
             </Form.Item>
-            <Form.Item required name="description" label="content" rules={[ { required: true } ]}>
+            <Form.Item required name="description" label="Description" rules={[ { required: true } ]}>
               <TextArea rows={2} />
             </Form.Item>
             <Flex gap={"small"} vertical style={{ width: "100%" }}>
