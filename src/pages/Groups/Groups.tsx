@@ -74,12 +74,12 @@ export const Groups: FC<IProps> = (): JSX.Element => {
     {
       title: t("Інститут"),
       key: "institute.code",
-      render: (record) => record.institute.code
+      render: (record: any) => record.institute.code,
     },
     {
       title: t("Студенти"),
       key: "users",
-      render: (record) => record?.students?.length || 0
+      render: (record: any) => record?.students?.length || 0,
     },
     {
       title: t("groups.actions"),

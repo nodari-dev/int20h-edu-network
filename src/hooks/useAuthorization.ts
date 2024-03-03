@@ -8,7 +8,7 @@ type TUseAuthorization = () => {
   isAuthorized: boolean;
   accessToken: string;
   user: IUser;
-  setAuthorization: (user: IUser) => void;
+  setAuthorization: (user: IUser, accessToken: string) => void;
   resetAuthorization: () => void;
   setUser: (user: IUser) => void;
 };
@@ -18,8 +18,9 @@ export const useAuthorization: TUseAuthorization = () => {
   const dispatch = useDispatch();
   const { accessToken, user } = useStore((store) => store.authorization);
 
-  const setAuthorization = (user: IUser | undefined): void => {
-    dispatch({ type: SET_AUTHORIZATION, user: user });
+  const setAuthorization = (_user: IUser | undefined, _accessToken: string): void => {
+    console.log(_user, _accessToken);
+    dispatch({ type: SET_AUTHORIZATION, user: _user, accessToken: _accessToken });
   };
 
   const setUser = (user: IUser): void => {
@@ -39,7 +40,7 @@ export const useAuthorization: TUseAuthorization = () => {
   };
 
   return {
-    isAuthorized: !!user.email,
+    isAuthorized: !!user.id,
     accessToken,
     user,
     setAuthorization,

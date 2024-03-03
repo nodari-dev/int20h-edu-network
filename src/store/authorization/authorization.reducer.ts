@@ -16,9 +16,6 @@ const initialState: IState = {
     name: "",
     email: "",
     role: null,
-    region: {
-      name: ""
-    }
   },
 };
 
@@ -26,8 +23,8 @@ export const authorizationReducer: TReducer = (state: IState = initialState, act
   switch (action.type) {
     case SET_AUTHORIZATION:
       return {
-        accessToken: "",
-        user: action.user,
+        accessToken: action.accessToken ,
+        user: { ...action.user },
       };
 
     case SET_USER:

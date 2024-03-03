@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import { Button, Descriptions, Flex, Skeleton, Table } from "antd";
-import { useParams } from "react-router-dom";
+import { Button, Flex, Skeleton, Table } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { gql, useLazyQuery } from "@apollo/client";
 import Title from "antd/es/typography/Title";
@@ -9,7 +9,6 @@ import { ROLE } from "../../models/user";
 
 interface IProps {}
 
-// TODO: UPDATE
 const SUBJECT = gql`
   query subject($id: UUID!) {
   pagedSubjects(
@@ -27,18 +26,11 @@ const SUBJECT = gql`
 }
 `;
 
-const tableData: any = {
-  fullName: "fullName",
-  phoneNumber: "phoneNumber",
-  age: "age",
-  role: "role",
-  email: "email",
-};
-
 export const Subject: FC<IProps> = (): JSX.Element => {
   const { id } = useParams();
   const { t } = useTranslation();
   const auth = useAuthorization();
+  const navigate = useNavigate();
   const [ subject, setSubject ] = useState<any>();
   const [ executeSearch ] = useLazyQuery(SUBJECT);
 
@@ -49,14 +41,6 @@ export const Subject: FC<IProps> = (): JSX.Element => {
       });
     }
   }, [ id ]);
-
-  const items = subject
-    ? Object.keys(tableData).map((key: any) => ({
-      key,
-      label: tableData[key],
-      children: subject[key],
-    }))
-    : [];
 
   const teacher_config: any = [
     {

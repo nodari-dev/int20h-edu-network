@@ -1,11 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { Button, Col, Flex, Form, Input, Row, Select } from "antd";
 import Title from "antd/es/typography/Title";
-import TextArea from "antd/lib/input/TextArea";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { gql, useLazyQuery, useMutation } from "@apollo/client";
-import { INSTITUTES } from "./institutes";
+import { gql, useLazyQuery } from "@apollo/client";
 import axios from "axios";
 
 interface IProps {}
@@ -31,8 +29,8 @@ const SUBJECTS = gql`
 export const CreateTeacher: FC<IProps> = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [groups, setGroups] = useState([])
-  const [subjects, setSubjects] = useState([])
+  const [ groups, setGroups ] = useState([]);
+  const [ subjects, setSubjects ] = useState([]);
   const [ findGroups ] = useLazyQuery(GROUPS);
   const [ findSubjects ] = useLazyQuery(SUBJECTS);
 
@@ -57,11 +55,11 @@ export const CreateTeacher: FC<IProps> = (): JSX.Element => {
     email: null,
     password: null,
     groupIds: [],
-    subjectIds: []
+    subjectIds: [],
   };
 
   const handleCreate = (body: any) => {
-    axios.post('https://jwp-team.com/backend/api/teachers/sign-up', body).then(() => {
+    axios.post("https://jwp-team.com/backend/api/teachers/sign-up", body).then(() => {
       navigate("/teachers/all");
     });
   };

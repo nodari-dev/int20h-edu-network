@@ -15,7 +15,7 @@ export const Dashboard: FC<IProps> = (): JSX.Element => {
     [ROLE.TEACHER]: <DashboardTeacher/>,
     [ROLE.STUDENT]: <DashboardStudent/>
   };
-
+  //@ts-ignore
   return dashboards[user.role];
 
 };

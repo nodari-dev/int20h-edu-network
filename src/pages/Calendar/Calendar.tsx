@@ -13,6 +13,6 @@ export const Calendar: FC<IProps> = (): JSX.Element => {
     [ROLE.TEACHER]: <CalendarTeacher/>,
     [ROLE.STUDENT]: <CalendarStudent/>
   };
-
+  //@ts-ignore
   return profiles[user.role];
 };

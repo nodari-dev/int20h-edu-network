@@ -1,17 +1,16 @@
-import {FC, useEffect} from "react";
-import {useTranslation} from "react-i18next";
-import {Button, Card, Col, Flex, Row, Skeleton, Tag, Typography} from "antd";
+import { FC } from "react";
+import { Button, Card, Col, Flex, Row, Skeleton, Typography } from "antd";
 import Title from "antd/es/typography/Title";
-import {Link} from "react-router-dom";
-import {useAuthorization} from "../../hooks";
-const { Text, Paragraph} = Typography;
+import { Link } from "react-router-dom";
+import { useAuthorization } from "../../hooks";
+import { CheckCircleOutlined, FieldTimeOutlined } from "@ant-design/icons";
 
-import {CheckCircleOutlined, FieldTimeOutlined} from "@ant-design/icons";
+const { Text, Paragraph } = Typography;
+
 interface IProps {}
 
 export const DashboardStudent: FC<IProps> = (): JSX.Element => {
-  const { t } = useTranslation();
-  const {user} = useAuthorization();
+  const { user } = useAuthorization();
   const data = false;
   const loading = data;
 
@@ -22,12 +21,14 @@ export const DashboardStudent: FC<IProps> = (): JSX.Element => {
       <Title level={3}>Upcoming tests</Title>
       <Row gutter={[ 16, 16 ]}>
         <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-          <Card title="Предмет: Практичнa" style={{ width: "100%" }} extra={
+          <Card
+            title="Предмет: Практичнa" style={{ width: "100%" }} extra={
             <Flex align="center" justify={"center"} gap={"6px"}>
               <FieldTimeOutlined />
-              <Text>Виконати до:  <strong></strong></Text>
+              <Text>Виконати до: <strong></strong></Text>
             </Flex>
-          }>
+          }
+          >
             <Skeleton loading={loading} active={true}>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
               </p>
@@ -37,12 +38,14 @@ export const DashboardStudent: FC<IProps> = (): JSX.Element => {
         </Col>
 
         <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-          <Card title="Предмет: Практичнa" style={{ width: "100%" }} extra={
+          <Card
+            title="Предмет: Практичнa" style={{ width: "100%" }} extra={
             <Flex align="center" justify={"center"} gap={"6px"}>
               <FieldTimeOutlined />
-              <Text>Виконати до:  <strong></strong></Text>
+              <Text>Виконати до: <strong></strong></Text>
             </Flex>
-          }>
+          }
+          >
             <Skeleton loading={loading} active={true}>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
               </p>
@@ -51,12 +54,14 @@ export const DashboardStudent: FC<IProps> = (): JSX.Element => {
           </Card>
         </Col>
         <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-          <Card title="Предмет: Практичнa" style={{ width: "100%" }} extra={
+          <Card
+            title="Предмет: Практичнa" style={{ width: "100%" }} extra={
             <Flex align="center" justify={"center"} gap={"6px"}>
               <FieldTimeOutlined />
-              <Text>Виконати до:  <strong></strong></Text>
+              <Text>Виконати до: <strong></strong></Text>
             </Flex>
-          }>
+          }
+          >
             <Skeleton loading={loading} active={true}>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
               </p>
@@ -75,9 +80,11 @@ export const DashboardStudent: FC<IProps> = (): JSX.Element => {
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
               </p>
-              <Paragraph strong copyable={{
-                icon: [<CheckCircleOutlined />],
-              }}>
+              <Paragraph
+                strong copyable={{
+                icon: [ <CheckCircleOutlined /> ],
+              }}
+              >
                 Оцінка: 3/100
               </Paragraph>
             </Skeleton>
@@ -89,9 +96,11 @@ export const DashboardStudent: FC<IProps> = (): JSX.Element => {
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
               </p>
-              <Paragraph strong copyable={{
-                icon: [<CheckCircleOutlined />],
-              }}>
+              <Paragraph
+                strong copyable={{
+                icon: [ <CheckCircleOutlined /> ],
+              }}
+              >
                 Оцінка: 3/100
               </Paragraph>
             </Skeleton>
@@ -103,9 +112,11 @@ export const DashboardStudent: FC<IProps> = (): JSX.Element => {
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
               </p>
-              <Paragraph strong copyable={{
-                    icon: [<CheckCircleOutlined />],
-                  }}>
+              <Paragraph
+                strong copyable={{
+                icon: [ <CheckCircleOutlined /> ],
+              }}
+              >
                 Оцінка: 3/100
               </Paragraph>
             </Skeleton>

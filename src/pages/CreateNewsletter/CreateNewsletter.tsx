@@ -1,12 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { Button, Col, DatePicker, Flex, Form, Row, Select } from "antd";
+import { Button, DatePicker, Flex, Form, Select } from "antd";
 import dayjs from "dayjs";
 import Title from "antd/es/typography/Title";
-import { useTranslation } from "react-i18next";
 import TextArea from "antd/lib/input/TextArea";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-import EditorDeezNuts from "../../components/Editor/EditorDeezNuts";
 
 const { Option } = Select;
 
@@ -30,12 +28,10 @@ const groupCreate = gql`
 interface IProps {}
 
 export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [ groups, setGroups ] = useState<any[]>([]);
   const [ executeSearch ] = useLazyQuery(EXCHANGE_RATES);
   const [ create ] = useMutation(groupCreate);
-  const [ editor, setEditor ] = useState<any>(undefined);
   const handleCreate = (body: any) => {
     create({
       variables: {
@@ -93,7 +89,7 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
           </Select>
         </Form.Item>
         <Form.Item required name="text" label="Content">
-          <EditorDeezNuts onChange={setEditor} state={editor} />
+          <TextArea />
         </Form.Item>
         <Form.Item name="triggerAt" label="Запланований термім" rules={[ { required: true } ]}>
           <DatePicker

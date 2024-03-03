@@ -1,12 +1,11 @@
 import { FC, useEffect, useState } from "react";
 import { Button, Flex, Table, TableProps } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { gql, useLazyQuery } from "@apollo/client";
 import Title from "antd/es/typography/Title";
 import { SearchBar } from "../../components";
 import { ORDER_QUERY, TQuery } from "../../models/query";
-import {useSubjectsConfig} from "./useSubjectsConfig";
+import { useSubjectsConfig } from "./useSubjectsConfig";
 
 interface IProps {}
 
@@ -34,11 +33,10 @@ const SUBJECTS = gql`
     }
     }
   }
-`
+`;
 
 export const Subjects: FC<IProps> = (): JSX.Element => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const [ total, setTotal ] = useState<number>();
   const [ search, setSearch ] = useState<string>("");
   const [ executeSearch, { data, loading } ] = useLazyQuery(SUBJECTS);
@@ -102,6 +100,7 @@ export const Subjects: FC<IProps> = (): JSX.Element => {
   };
 
   const onChange: TableProps<any>["onChange"] = (pagination, filters, sorter, extra): void => {
+    console.log(filters, pagination, extra);
     if (extra.action === "sort") {
       handleSort(sorter);
     }

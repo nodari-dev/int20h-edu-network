@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { constants } from "../../styles/constants";
 import Title from "antd/es/typography/Title";
 import axios from "axios";
+import { ROLE } from "../../models/user";
 
 interface IProps {}
 
@@ -14,60 +15,61 @@ export const SignIn: FC<IProps> = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const loader = useLoader();
-  const [role, setRole] = useState<any>("Студент")
+  const [ role, setRole ] = useState<any>("Студент");
   const notification = useNotification();
   const { isAuthorized, setAuthorization } = useAuthorization();
 
   const onFinish = (values: any) => {
     const signIn = loader.create(t("signIn.loader.title"));
     signIn.start();
-    let url = 'https://jwp-team.com/backend/api/students/sign-in'
+    let url: string = "https://jwp-team.com/backend/api/students/sign-in";
 
-    if(role !== "Студент"){
-      url = 'https://jwp-team.com/backend/api/teacher/sign-in'
+    if (role === "Викладач") {
+      url = "https://jwp-team.com/backend/api/teachers/sign-in";
     }
-      // TODO: improve
-    // axios.post(url,{...values})
-    //   .then((data) => {
-    //     console.log(data)
-    //   // navigate("/");
-    // }).catch(()=> notification.error("Wrong credentials !"));
 
-    const ref = setTimeout(() => {
-      if ((values.email === "daniel.hrovinsky@gmail.com") && (values.password === "duck")) {
-        setAuthorization({
-          id: 1,
-          email: "daniel.hrovinsky@gmail.com",
-          name: "Daniel",
-          lastName: "Hrovinskyi",
-          role: "ADMIN",
-        });
+    if (role === "Адміністратор") {
+      url = "https://jwp-team.com/backend/api/admin/sign-in";
+    }
+
+    axios.post(url, { ...values })
+      .then(({ data }: any) => {
+        if (role === "Викладач") {
+          setAuthorization({ ...data.teacher, role: "TEACHER" }, data.accessToken);
+        }
+
+        if (role === "Адміністратор") {
+          setAuthorization({ ...data.admin, role: "ADMIN" }, data.accessToken);
+        }
+
+        if (role === "Студент") {
+          setAuthorization({ ...data.student, role: "STUDENT" }, data.accessToken);
+        }
+
         navigate("/");
-      } else if ((values.email === "nodar@neuk.com") && (values.password === "duck")) {
-        setAuthorization({
-          id: 1,
-          email: "nodar@neuk.com",
-          name: "Nodar",
-          lastName: "Neuk",
-          role: "STUDENT",
-        });
-        navigate("/");
-      } else if ((values.email === "den@uk.com") && (values.password === "duck")) {
-        setAuthorization({
-          id: 1,
-          email: "den@uk.com",
-          name: "Den",
-          lastName: "Tvardovskyi",
-          role: "TEACHER",
-        });
-        navigate("/");
-      } else {
-        notification.error("Wrong credentials !");
-      }
+        signIn.stop();
+      }).catch(() => {
       signIn.stop();
-      clearTimeout(ref);
-    }, 2000);
+      notification.error("Wrong credentials !");
+    });
+  };
 
+  const cred = {
+    "Викладач": {
+      login: "daniel.hrovinsky@gmail.com",
+      pass: "superteacher",
+      role: ROLE.TEACHER,
+    },
+    "Студент": {
+      login: "nodar22@gmai.com",
+      pass: "1",
+      role: ROLE.STUDENT,
+    },
+    "Адміністратор": {
+      login: "admin@gmail.com",
+      pass: "superpower",
+      role: ROLE.ADMIN,
+    },
   };
 
   return !isAuthorized ? (
@@ -78,14 +80,15 @@ export const SignIn: FC<IProps> = (): JSX.Element => {
         initialValues={{ remember: true }}
         onFinish={onFinish}
       >
-        <Flex vertical gap={5} style={{marginBottom: 24}}>
+        <Flex vertical gap={5} style={{ marginBottom: 24 }}>
           <Title>Увійти як </Title>
           <Segmented
-            options={['Викладач', 'Студент', 'Адміністратор']}
+            options={[ "Викладач", "Студент", "Адміністратор" ]}
             size="small"
             onChange={setRole}
             value={role}
           />
+          <Title level={5}>Login: {cred[role].login} Password: {cred[role].pass}</Title>
         </Flex>
 
 

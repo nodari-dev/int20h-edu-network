@@ -54,7 +54,7 @@ export const CreateAssignment: FC<IProps> = (): JSX.Element => {
             description: body.description,
             title: body.title,
             groupId: body.groupId,
-            createQuestionCommands: body.createQuestionCommands.map((c) => ({
+            createQuestionCommands: body.createQuestionCommands.map((c:any) => ({
               ...c,
               createCorrectAnswerCommand: { value: c.createCorrectAnswerCommand },
             })),

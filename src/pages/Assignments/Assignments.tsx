@@ -1,12 +1,11 @@
-import {FC, useEffect, useState} from "react";
-import {Button, Flex, Table, TableProps} from "antd";
-import {gql, useLazyQuery} from "@apollo/client";
-import {useTranslation} from "react-i18next";
-import {useNavigate} from "react-router-dom";
-import {useSubjectsConfig} from "../Subjects/useSubjectsConfig";
-import {ORDER_QUERY, TQuery} from "../../models/query";
+import { FC, useEffect, useState } from "react";
+import { Button, Flex, Table, TableProps } from "antd";
+import { gql, useLazyQuery } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { useSubjectsConfig } from "../Subjects/useSubjectsConfig";
+import { ORDER_QUERY, TQuery } from "../../models/query";
 import Title from "antd/es/typography/Title";
-import {SearchBar} from "../../components";
+import { SearchBar } from "../../components";
 
 interface IProps {}
 
@@ -50,7 +49,6 @@ const ASSIGNMENTS = gql`
 
 export const Assignments: FC<IProps> = (): JSX.Element => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const [ total, setTotal ] = useState<number>();
   const [ search, setSearch ] = useState<string>("");
   const [ executeSearch, { data, loading } ] = useLazyQuery(ASSIGNMENTS);
@@ -80,7 +78,7 @@ export const Assignments: FC<IProps> = (): JSX.Element => {
 
   const renderView = (record: any) => {
     return (
-        <Button onClick={() => navigate("/assignments/" + record.id)}>View</Button>
+      <Button onClick={() => navigate("/assignments/" + record.id)}>View</Button>
     );
   };
   const config = useSubjectsConfig({ onView: renderView });
@@ -114,23 +112,24 @@ export const Assignments: FC<IProps> = (): JSX.Element => {
   };
 
   const onChange: TableProps<any>["onChange"] = (pagination, filters, sorter, extra): void => {
+    console.log(filters, pagination, extra);
     if (extra.action === "sort") {
       handleSort(sorter);
     }
   };
 
   return (
-      <Flex gap="small" vertical>
-        <Title level={3} style={{ margin: 0 }}>Subjects</Title>
-        <SearchBar onSearch={handleSearch} placeholder="Search by title" />
-        <Table
-            loading={loading}
-            columns={config}
-            pagination={{ ...params.pagination, total, onChange: onPaginationChange }}
-            dataSource={data?.pagedTests?.items}
-            onChange={onChange}
-            scroll={{ x: 600 }}
-        />
-      </Flex>
+    <Flex gap="small" vertical>
+      <Title level={3} style={{ margin: 0 }}>Subjects</Title>
+      <SearchBar onSearch={handleSearch} placeholder="Search by title" />
+      <Table
+        loading={loading}
+        columns={config}
+        pagination={{ ...params.pagination, total, onChange: onPaginationChange }}
+        dataSource={data?.pagedTests?.items}
+        onChange={onChange}
+        scroll={{ x: 600 }}
+      />
+    </Flex>
   );
 };
