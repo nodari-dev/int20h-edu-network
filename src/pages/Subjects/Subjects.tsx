@@ -62,7 +62,7 @@ export const Subjects: FC<IProps> = (): JSX.Element => {
     }
 
     executeSearch({ variables }).then((res) => {
-      setTotal(res.data.pagedSubjecs.totalCount);
+      setTotal(res.data.pagedSubjects.totalCount);
     });
   }, [ params, search ]);
 
