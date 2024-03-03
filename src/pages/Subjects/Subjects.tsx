@@ -10,7 +10,6 @@ import {useSubjectsConfig} from "./useSubjectsConfig";
 
 interface IProps {}
 
-// TODO: UPDATE
 const SUBJECTS = gql`
   query pagedSubjects($search: String!, $pageSize: Int, $offset: Int, $sorters: [SubjectDtoSortInput!] ) {
   pagedSubjects(

@@ -11,20 +11,17 @@ interface IProps {}
 
 // TODO: UPDATE
 const SUBJECT = gql`
-  query users($id: String!) {
-  pagedUsers(
+  query subject($id: String!) {
+  pagedSubjects(
     where: {
       id: {eq: $id}
     }
   ) {
     totalCount
     items {
-      age
-      email
-      fullName
-      phoneNumber
       id
-      role
+      title
+      description
     }
   }
 }

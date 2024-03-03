@@ -11,9 +11,9 @@ import { ORDER_QUERY, TQuery } from "../../models/query";
 interface IProps {
 }
 
-const EXCHANGE_RATES = gql`
-  query users($search: String!, $pageSize: Int, $offset: Int, $sorters: [UserDtoSortInput!] ) {
-  pagedUsers(
+const STUDENTS = gql`
+  query pagedStudents($search: String!, $pageSize: Int, $offset: Int, $sorters: [StudentDtoSortInput!] ) {
+  pagedStudents(
     skip: $offset
     take: $pageSize
     where: {
@@ -34,7 +34,9 @@ const EXCHANGE_RATES = gql`
       fullName
       phoneNumber
       id
-      role
+      createdAt 
+      group
+      institute 
     }
   }
 }
@@ -45,7 +47,7 @@ export const Students: FC<IProps> = (): JSX.Element => {
   const { t } = useTranslation();
   const [ total, setTotal ] = useState<number>();
   const [ search, setSearch ] = useState<string>("");
-  const [ executeSearch, { data, loading } ] = useLazyQuery(EXCHANGE_RATES);
+  const [ executeSearch, { data, loading } ] = useLazyQuery(STUDENTS);
   const [ params, setParams ] = useState<any>({
     pagination: {
       page: 1,
@@ -66,7 +68,7 @@ export const Students: FC<IProps> = (): JSX.Element => {
     }
 
     executeSearch({ variables }).then((res) => {
-      setTotal(res.data.pagedUsers.totalCount);
+      setTotal(res.data.pagedStudents.totalCount);
     });
   }, [ params, search ]);
 
@@ -120,7 +122,7 @@ export const Students: FC<IProps> = (): JSX.Element => {
         loading={loading}
         columns={config}
         pagination={{ ...params.pagination, total, onChange: onPaginationChange }}
-        dataSource={data?.pagedUsers?.items}
+        dataSource={data?.pagedStudents?.items}
         onChange={onChange}
         scroll={{ x: 600 }}
       />

@@ -9,19 +9,16 @@ interface IProps {}
 
 const USER = gql`
   query users($id: String!) {
-  pagedUsers(
+  pagedStudents(
     where: {
       id: {eq: $id}
     }
   ) {
-    totalCount
-    items {
-      age
-      email
-      fullName
-      phoneNumber
-      id
-      role
+    items{ 
+    phoneNumber
+    age
+    email 
+    fullName
     }
   }
 }
@@ -31,7 +28,6 @@ const tableData: any = {
   fullName: "fullName",
   phoneNumber: "phoneNumber",
   age: "age",
-  role: "role",
   email: "email"
 };
 
@@ -44,7 +40,7 @@ export const Student: FC<IProps> = (): JSX.Element => {
   useEffect(() => {
     if (id) {
       executeSearch({ variables: { id } }).then((data) => {
-        setUser(data.data.pagedUsers.items[0]);
+        setUser(data.data.students.items[0]);
       });
     }
   }, [ id ]);
@@ -62,7 +58,6 @@ export const Student: FC<IProps> = (): JSX.Element => {
       <Skeleton loading={!user} active={true}>
         <Descriptions title={t(`user-info.title`)}>
           {items.map((item) => {
-
             if (item.key.includes("Date")) {
               return (
                 <Descriptions.Item key={item.key} label={t(`user-info.${item.key}`)}>
