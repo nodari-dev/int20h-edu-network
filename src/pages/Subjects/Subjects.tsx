@@ -3,22 +3,22 @@ import { Button, Flex, Table, TableProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { gql, useLazyQuery } from "@apollo/client";
-import { useStudentsConfig } from "../Students/useStudentsConfig";
 import Title from "antd/es/typography/Title";
 import { SearchBar } from "../../components";
 import { ORDER_QUERY, TQuery } from "../../models/query";
+import {useSubjectsConfig} from "./useSubjectsConfig";
 
 interface IProps {}
 
 // TODO: UPDATE
-const EXCHANGE_RATES = gql`
-  query users($search: String!, $pageSize: Int, $offset: Int, $sorters: [UserDtoSortInput!] ) {
-  pagedUsers(
+const SUBJECTS = gql`
+  query pagedSubjects($search: String!, $pageSize: Int, $offset: Int, $sorters: [SubjectDtoSortInput!] ) {
+  pagedSubjects(
     skip: $offset
     take: $pageSize
     where: {
       or: [
-        { fullName: { contains: $search } }
+        { title: { contains: $search } }
       ]
     }
     order: $sorters
@@ -29,23 +29,20 @@ const EXCHANGE_RATES = gql`
     }
     totalCount
     items {
-      age
-      email
-      fullName
-      phoneNumber
       id
-      role
+      title
+      description
+    }
     }
   }
-}
-`;
+`
 
 export const Subjects: FC<IProps> = (): JSX.Element => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [ total, setTotal ] = useState<number>();
   const [ search, setSearch ] = useState<string>("");
-  const [ executeSearch, { data, loading } ] = useLazyQuery(EXCHANGE_RATES);
+  const [ executeSearch, { data, loading } ] = useLazyQuery(SUBJECTS);
   const [ params, setParams ] = useState<any>({
     pagination: {
       page: 1,
@@ -66,16 +63,16 @@ export const Subjects: FC<IProps> = (): JSX.Element => {
     }
 
     executeSearch({ variables }).then((res) => {
-      setTotal(res.data.pagedUsers.totalCount);
+      setTotal(res.data.pagedSubjecs.totalCount);
     });
   }, [ params, search ]);
 
   const renderView = (record: any) => {
     return (
-      <Button onClick={() => navigate("/students/" + record.id)}>{t("users.view")}</Button>
+      <Button onClick={() => navigate("/subjects/" + record.id)}>View</Button>
     );
   };
-  const config = useStudentsConfig({ onView: renderView });
+  const config = useSubjectsConfig({ onView: renderView });
 
   const handleSearch = (v: string) => {
     setSearch(v);
@@ -106,7 +103,6 @@ export const Subjects: FC<IProps> = (): JSX.Element => {
   };
 
   const onChange: TableProps<any>["onChange"] = (pagination, filters, sorter, extra): void => {
-    console.log(filters, pagination);
     if (extra.action === "sort") {
       handleSort(sorter);
     }
@@ -120,7 +116,7 @@ export const Subjects: FC<IProps> = (): JSX.Element => {
         loading={loading}
         columns={config}
         pagination={{ ...params.pagination, total, onChange: onPaginationChange }}
-        dataSource={data?.pagedUsers?.items}
+        dataSource={data?.pagedSubjects?.items}
         onChange={onChange}
         scroll={{ x: 600 }}
       />
