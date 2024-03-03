@@ -80,7 +80,7 @@ export const Assignments: FC<IProps> = (): JSX.Element => {
 
   const renderView = (record: any) => {
     return (
-        <Button onClick={() => navigate("/subjects/" + record.id)}>View</Button>
+        <Button onClick={() => navigate("/assignments/" + record.id)}>View</Button>
     );
   };
   const config = useSubjectsConfig({ onView: renderView });

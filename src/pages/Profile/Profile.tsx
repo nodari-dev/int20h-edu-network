@@ -1,19 +1,62 @@
 import { FC } from "react";
-import {ROLE} from "../../models/user";
-import {ProfileAdmin} from "./ProfileAdmin";
 import {useAuthorization} from "../../hooks";
-import {ProfileStudent} from "./ProfileStudent";
+import {useTranslation} from "react-i18next";
+import {Avatar, Col, Descriptions, DescriptionsProps, Flex, Row, Space, Badge} from "antd";
+import {getInitials} from "../../utils";
+import Title from "antd/es/typography/Title";
 
 interface IProps {}
 
+const BADGES: any = {
+  "Admin": "cyan",
+  "Teacher": "pink",
+  "Student": "green",
+};
+
 export const Profile: FC<IProps> = (): JSX.Element => {
   const { user } = useAuthorization();
-
-  const profiles = {
-    [ROLE.ADMIN]: <ProfileAdmin/>,
-    [ROLE.TEACHER]: <p>кладмен підор</p>,
-    [ROLE.STUDENT]: <ProfileStudent/>
-  };
-
-  return profiles[user.role];
+  const { t } = useTranslation();
+  const items: DescriptionsProps["items"] = [
+    {
+      key: "1",
+      label: t("account.firstName"),
+      children: user?.name || "",
+    },
+    {
+      key: "2",
+      label: t("account.lastName"),
+      children: user?.lastName || "",
+    },
+    {
+      key: "3",
+      label: t("account.role"),
+      children: user.role,
+    },
+    {
+      key: "4",
+      label: t("account.email"),
+      children: user.email,
+    },
+  ];
+  return (
+      <Flex gap="small" vertical>
+        <Flex justify="space-between" align="center">
+          <Title>{t("account.title")}</Title>
+        </Flex>
+        <Row>
+          <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+            <Space>
+              <Badge.Ribbon text={user.role} color={BADGES[user.role || ""]}>
+                <Avatar size={128} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                  <Title style={{ margin: 0 }}>{getInitials(user)}</Title>
+                </Avatar>
+              </Badge.Ribbon>
+            </Space>
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={18} xl={16}>
+            <Descriptions column={{ xs: 1, sm: 1, md: 2, lg: 2, xl: 2 }} items={items} />
+          </Col>
+        </Row>
+      </Flex>
+  )
 };

@@ -80,10 +80,10 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
         onFinish={handleCreate}
         initialValues={initialValues}
       >
-        <Title>Create newsletter</Title>
-        <Form.Item name="group" label="Group" rules={[ { required: true } ]}>
+        <Title>Створити розсилку</Title>
+        <Form.Item name="group" label="Група" rules={[ { required: true } ]}>
           <Select
-            placeholder="Select a group"
+            placeholder="Група"
             allowClear
           >
             {groups.map(({ value, label }) => {
@@ -95,7 +95,7 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
         <Form.Item required name="text" label="Content">
           <EditorDeezNuts onChange={setEditor} state={editor} />
         </Form.Item>
-        <Form.Item name="triggerAt" label="Schedule Time" rules={[ { required: true } ]}>
+        <Form.Item name="triggerAt" label="Запланований термім" rules={[ { required: true } ]}>
           <DatePicker
             disabledDate={disabledDate}
             showTime format="YYYY-MM-DD HH:mm:ss"
@@ -103,7 +103,7 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
         </Form.Item>
         <Flex gap={"small"} vertical style={{ width: "100%" }}>
           <Form.Item>
-            <Button htmlType="submit">{t("Schedule")}</Button>
+            <Button htmlType="submit">Запланувати</Button>
           </Form.Item>
         </Flex>
       </Form>

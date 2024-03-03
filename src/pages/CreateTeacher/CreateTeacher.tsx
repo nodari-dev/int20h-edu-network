@@ -75,13 +75,13 @@ export const CreateTeacher: FC<IProps> = (): JSX.Element => {
             onFinish={handleCreate}
             initialValues={initialValues}
           >
-            <Title>Add new teacher</Title>
-            <Form.Item name="fullName" label="Full Name" rules={[ { required: true } ]}>
+            <Title>Створити вчителя</Title>
+            <Form.Item name="fullName" label="Ім'я та прізвище" rules={[ { required: true } ]}>
               <Input />
             </Form.Item>
             <Form.Item
               name="email"
-              label="Email"
+              label="Пошта"
               rules={[
                 { type: "email", message: t("signIn.email.validation.email") },
                 { required: true, message: t("signIn.email.validation.required") },
@@ -89,26 +89,26 @@ export const CreateTeacher: FC<IProps> = (): JSX.Element => {
             >
               <Input />
             </Form.Item>
-            <Form.Item name="password" label="Password" rules={[ { required: true } ]}>
+            <Form.Item name="password" label="Пароль" rules={[ { required: true } ]}>
               <Input />
             </Form.Item>
             <Form.Item
               name="groupIds"
-              label="Groups"
+              label="Групи"
               rules={[ { required: true, type: "array" } ]}
             >
               <Select mode="multiple" allowClear options={groups} />
             </Form.Item>
             <Form.Item
               name="subjectIds"
-              label="Subjects"
+              label="Предмети"
               rules={[ { required: true, type: "array" } ]}
             >
               <Select mode="multiple" allowClear options={subjects} />
             </Form.Item>
             <Flex gap={"small"} vertical style={{ width: "100%" }}>
               <Form.Item>
-                <Button htmlType="submit">{t("Create")}</Button>
+                <Button htmlType="submit">Створити</Button>
               </Form.Item>
             </Flex>
           </Form>
