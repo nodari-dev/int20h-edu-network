@@ -8,7 +8,6 @@ import TextArea from "antd/lib/input/TextArea";
 
 interface IProps {}
 
-// TODO: UPDATE
 const subjectCreate = gql`
       mutation subject($input:  CreateSubjectInput!) {
         createSubject(input: $input) {
@@ -39,8 +38,7 @@ export const CreateSubject: FC<IProps> = (): JSX.Element => {
           },
         },
       },
-    }).then((data) => {
-      console.log(data);
+    }).then(() => {
       navigate("/subjects/all");
     });
   };
