@@ -97,14 +97,14 @@ export const CreateTeacher: FC<IProps> = (): JSX.Element => {
               label="Groups"
               rules={[ { required: true, type: "array" } ]}
             >
-              <Select mode="multiple" allowClear options={subjects} />
+              <Select mode="multiple" allowClear options={groups} />
             </Form.Item>
             <Form.Item
               name="subjectIds"
               label="Subjects"
               rules={[ { required: true, type: "array" } ]}
             >
-              <Select mode="multiple" allowClear options={groups} />
+              <Select mode="multiple" allowClear options={subjects} />
             </Form.Item>
             <Flex gap={"small"} vertical style={{ width: "100%" }}>
               <Form.Item>

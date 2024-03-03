@@ -11,11 +11,10 @@ import EditorDeezNuts from "../../components/Editor/EditorDeezNuts";
 const { Option } = Select;
 
 const EXCHANGE_RATES = gql`
-  query userGroups($where: UserGroupEntityFilterInput) {
-  userGroups(where:$where) {
+  query userGroups($where: GroupDtoFilterInput) {
+  groups(where:$where) {
       title
       id
-      usersPhoneNumbers
   }
 }
 `;
@@ -55,10 +54,9 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
 
   useEffect(() => {
     executeSearch().then((data) => {
-      setGroups(data.data.userGroups.map(({ id, title, usersPhoneNumbers }: any) => ({
+      setGroups(data.data.groups.map(({ id, title }: any) => ({
         value: id,
-        label: title + ` (${usersPhoneNumbers.length})`,
-        data: usersPhoneNumbers,
+        label: title,
       })));
     });
   }, []);
