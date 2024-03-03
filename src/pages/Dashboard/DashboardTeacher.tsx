@@ -25,7 +25,9 @@ interface IProps {}
 
 export const DashboardTeacher: FC<IProps> = (): JSX.Element => {
   const { user } = useAuthorization();
-  const { data: { students }, loading } = useQuery(STUDENTS);
+  const { data, loading } = useQuery(STUDENTS);
+
+  const students = data?.students
 
   return (
     <Flex gap={"small"} vertical>
@@ -34,7 +36,7 @@ export const DashboardTeacher: FC<IProps> = (): JSX.Element => {
         <Col xs={24} sm={12} md={12} lg={8} xl={8}>
           <Card title="Усього учнів" style={{ width: "100%" }}>
             <Skeleton loading={loading} active={true}>
-              <Title>{students.length}</Title>
+              <Title>{students?.length}</Title>
             </Skeleton>
           </Card>
         </Col>
