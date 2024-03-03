@@ -26,14 +26,9 @@ export const useStudentsConfig: any = ({ onView }: any) => {
         key: "email",
       },
       {
-        title: "Institute",
-        dataIndex: "institute",
-        key: "institute",
-      },
-      {
         title: "Group",
-        dataIndex: "group",
-        key: "group",
+        dataIndex: "groupId",
+        key: "groupId",
       },
       {
         title: t("users.actions"),

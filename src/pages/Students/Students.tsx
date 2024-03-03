@@ -35,8 +35,7 @@ const STUDENTS = gql`
       phoneNumber
       id
       createdAt 
-      group
-      institute 
+      groupId
     }
   }
 }
