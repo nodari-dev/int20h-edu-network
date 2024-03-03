@@ -29,7 +29,7 @@ export const SignIn: FC<IProps> = (): JSX.Element => {
     }
 
     if (role === "Адміністратор") {
-      url = "https://jwp-team.com/backend/api/admin/sign-in";
+      url = "https://jwp-team.com/backend/api/admins/sign-in";
     }
 
     axios.post(url, { ...values })
