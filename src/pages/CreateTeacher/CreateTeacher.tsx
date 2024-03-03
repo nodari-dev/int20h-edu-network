@@ -1,47 +1,67 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button, Col, Flex, Form, Input, Row, Select } from "antd";
 import Title from "antd/es/typography/Title";
 import TextArea from "antd/lib/input/TextArea";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { INSTITUTES } from "./institutes";
+import axios from "axios";
 
 interface IProps {}
-// TODO: UPDATE
-const teacherCreate = gql`
-      mutation scheduleMessage($input:  ScheduleMessageInput!) {
-        scheduleMessage(input: $input) {
-          boolean
-        }
-      }
-  `;
+
+const GROUPS = gql`
+  query userGroups($where: GroupDtoFilterInput) {
+  groups(where:$where) {
+      title
+      id
+  }
+}
+`;
+
+const SUBJECTS = gql`
+  query userGroups($where: SubjectDtoFilterInput) {
+  subjects(where:$where) {
+      title
+      id
+  }
+}
+`;
 
 export const CreateTeacher: FC<IProps> = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [ create ] = useMutation(teacherCreate);
+  const [groups, setGroups] = useState([])
+  const [subjects, setSubjects] = useState([])
+  const [ findGroups ] = useLazyQuery(GROUPS);
+  const [ findSubjects ] = useLazyQuery(SUBJECTS);
+
+  useEffect(() => {
+    findGroups().then((data) => {
+      setGroups(data.data.groups.map(({ id, title }: any) => ({
+        value: id,
+        label: title,
+      })));
+    });
+
+    findSubjects().then((data) => {
+      setSubjects(data.data.subjects.map(({ id, title }: any) => ({
+        value: id,
+        label: title,
+      })));
+    });
+  }, []);
 
   const initialValues = {
     fullName: null,
     email: null,
-    institute: [],
-    description: null,
+    password: null,
+    groupIds: [],
+    subjectIds: []
   };
 
   const handleCreate = (body: any) => {
-    create({
-      variables: {
-        input: {
-          command: {
-            fullName: body.fullName,
-            email: body.email,
-            institute: body.institute,
-            description: body.description,
-          },
-        },
-      },
-    }).then(() => {
+    axios.post('https://jwp-team.com/backend/api/teachers/sign-up', body).then(() => {
       navigate("/teachers/all");
     });
   };
@@ -69,19 +89,26 @@ export const CreateTeacher: FC<IProps> = (): JSX.Element => {
             >
               <Input />
             </Form.Item>
+            <Form.Item name="password" label="Password" rules={[ { required: true } ]}>
+              <Input />
+            </Form.Item>
             <Form.Item
-              name="institute"
-              label="Institute"
+              name="groupIds"
+              label="Groups"
               rules={[ { required: true, type: "array" } ]}
             >
-              <Select mode="multiple" allowClear options={INSTITUTES} />
+              <Select mode="multiple" allowClear options={subjects} />
             </Form.Item>
-            <Form.Item required name="description" label="Description" rules={[ { required: true } ]}>
-              <TextArea rows={2} />
+            <Form.Item
+              name="subjectIds"
+              label="Subjects"
+              rules={[ { required: true, type: "array" } ]}
+            >
+              <Select mode="multiple" allowClear options={groups} />
             </Form.Item>
             <Flex gap={"small"} vertical style={{ width: "100%" }}>
               <Form.Item>
-                <Button htmlType="submit">{t("Schedule")}</Button>
+                <Button htmlType="submit">{t("Create")}</Button>
               </Form.Item>
             </Flex>
           </Form>

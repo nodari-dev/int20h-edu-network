@@ -1,10 +1,12 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useAuthorization, useLoader, useNotification } from "../../hooks";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, MailOutlined, SmileOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Flex, Form, Input, Result } from "antd";
+import { Button, Checkbox, Flex, Form, Input, Result, Segmented } from "antd";
 import { useTranslation } from "react-i18next";
 import { constants } from "../../styles/constants";
+import Title from "antd/es/typography/Title";
+import axios from "axios";
 
 interface IProps {}
 
@@ -12,12 +14,24 @@ export const SignIn: FC<IProps> = (): JSX.Element => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const loader = useLoader();
+  const [role, setRole] = useState<any>("Студент")
   const notification = useNotification();
   const { isAuthorized, setAuthorization } = useAuthorization();
 
   const onFinish = (values: any) => {
     const signIn = loader.create(t("signIn.loader.title"));
     signIn.start();
+    let url = 'https://jwp-team.com/backend/api/students/sign-in'
+
+    if(role !== "Студент"){
+      url = 'https://jwp-team.com/backend/api/teacher/sign-in'
+    }
+      // TODO: improve
+    // axios.post(url,{...values})
+    //   .then((data) => {
+    //     console.log(data)
+    //   // navigate("/");
+    // }).catch(()=> notification.error("Wrong credentials !"));
 
     const ref = setTimeout(() => {
       if ((values.email === "daniel.hrovinsky@gmail.com") && (values.password === "duck")) {
@@ -64,6 +78,17 @@ export const SignIn: FC<IProps> = (): JSX.Element => {
         initialValues={{ remember: true }}
         onFinish={onFinish}
       >
+        <Flex vertical gap={5} style={{marginBottom: 24}}>
+          <Title>Увійти як </Title>
+          <Segmented
+            options={['Викладач', 'Студент', 'Адміністратор']}
+            size="small"
+            onChange={setRole}
+            value={role}
+          />
+        </Flex>
+
+
         <Form.Item
           name="email"
           rules={[
