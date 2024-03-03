@@ -88,6 +88,7 @@ export const SignIn: FC<IProps> = (): JSX.Element => {
             onChange={setRole}
             value={role}
           />
+          {/*//@ts-ignore*/}
           <Title level={5}>Login: {cred[role].login} Password: {cred[role].pass}</Title>
         </Flex>
 

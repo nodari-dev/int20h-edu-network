@@ -2,15 +2,30 @@ import { FC } from "react";
 import { Card, Col, Flex, Row, Skeleton } from "antd";
 import Title from "antd/es/typography/Title";
 import { ColumnChart } from "../../components";
+import { gql, useQuery } from "@apollo/client";
 import { useAuthorization } from "../../hooks";
+
+const STUDENTS = gql`
+  query students( $sorters: [StudentDtoSortInput!] ) {
+  students(
+    order: $sorters
+  ) {
+      age
+      email
+      fullName
+      phoneNumber
+      id
+      createdAt 
+      groupId
+  }
+}
+`;
 
 interface IProps {}
 
 export const DashboardTeacher: FC<IProps> = (): JSX.Element => {
   const { user } = useAuthorization();
-
-  const data = undefined;
-  const loading = !data;
+  const { data: { students }, loading } = useQuery(STUDENTS);
 
   return (
     <Flex gap={"small"} vertical>
@@ -19,7 +34,7 @@ export const DashboardTeacher: FC<IProps> = (): JSX.Element => {
         <Col xs={24} sm={12} md={12} lg={8} xl={8}>
           <Card title="Усього учнів" style={{ width: "100%" }}>
             <Skeleton loading={loading} active={true}>
-              <Title>123</Title>
+              <Title>{students.length}</Title>
             </Skeleton>
           </Card>
         </Col>
