@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Button, DatePicker, Flex, Form, Select } from "antd";
+import {Button, DatePicker, Flex, Form, Input, Select} from "antd";
 import dayjs from "dayjs";
 import Title from "antd/es/typography/Title";
 import TextArea from "antd/lib/input/TextArea";
@@ -17,10 +17,12 @@ const EXCHANGE_RATES = gql`
 }
 `;
 
-const groupCreate = gql`
-      mutation scheduleMessage($input:  ScheduleMessageInput!) {
-        scheduleMessage(input: $input) {
-          boolean
+const emailCreate = gql`
+      mutation createScheduledEmail($input: CreateScheduledEmailInput!) {
+        createScheduledEmail(input: $input) {
+          scheduledEmailDto{
+            id
+          }
         }
       }
   `;
@@ -31,15 +33,16 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
   const navigate = useNavigate();
   const [ groups, setGroups ] = useState<any[]>([]);
   const [ executeSearch ] = useLazyQuery(EXCHANGE_RATES);
-  const [ create ] = useMutation(groupCreate);
+  const [ create ] = useMutation(emailCreate);
   const handleCreate = (body: any) => {
     create({
       variables: {
         input: {
           command: {
-            phoneNumbers: groups.find((i) => i.value === body.group).data,
+            recipient: body.group,
             text: body.text,
-            triggerAt: new Date(body.triggerAt),
+            sendsAt: body.triggerAt,
+            subject: body.subject
           },
         },
       },
@@ -59,6 +62,7 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
 
   const initialValues = {
     group: null,
+    subject: null,
     text: null,
     triggerAt: null,
   };
@@ -88,8 +92,11 @@ export const CreateNewsletter: FC<IProps> = (): JSX.Element => {
 
           </Select>
         </Form.Item>
-        <Form.Item required name="text" label="Content">
-          <TextArea />
+        <Form.Item required name="subject" label="Тема" >
+          <Input placeholder="Тема" />
+        </Form.Item>
+        <Form.Item required name="text" label="Content" >
+          <TextArea rows={8} placeholder="Content" />
         </Form.Item>
         <Form.Item name="triggerAt" label="Запланований термім" rules={[ { required: true } ]}>
           <DatePicker

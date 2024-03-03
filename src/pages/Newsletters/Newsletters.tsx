@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 interface IProps {}
 
 const EXCHANGE_RATES = gql`
-  query pagedScheduledMessages($pageSize: Int, $offset: Int ) {
-  pagedScheduledMessages(
+  query pagedScheduledEmails($pageSize: Int, $offset: Int ) {
+  pagedScheduledEmails(
     skip: $offset
     take: $pageSize
   ) {
@@ -20,10 +20,10 @@ const EXCHANGE_RATES = gql`
     totalCount
     items {
       id
-      isTriggered
-      phoneNumbers
       text
-      triggerAt
+      recipient
+      subject
+      sendsAt
     }
   }
 }
@@ -53,9 +53,11 @@ export const Newsletters: FC<IProps> = (): JSX.Element => {
     }
 
     executeSearch({ variables }).then((res) => {
-      setTotal(res.data.pagedUsers.totalCount);
+      setTotal(res.data?.pagedUsers?.totalCount);
     });
   }, [ params ]);
+
+  console.log(data)
 
   const config: any[] = [
     {
@@ -64,26 +66,24 @@ export const Newsletters: FC<IProps> = (): JSX.Element => {
       key: "id",
     },
     {
-      title: t("text"),
+      title: "Повідомлення",
       dataIndex: "text",
       key: "text",
     },
     {
-      title: t("Users"),
-      dataIndex: "phoneNumbers",
-      key: "phoneNumbers",
-      render: (record:any) => record.length
+      title: "Тема",
+      dataIndex: "subject",
+      key: "subject",
     },
     {
-      title: t("Is Triggered"),
-      dataIndex: "isTriggered",
-      key: "isTriggered",
-      render: (record:any) => record ? "Yes" :"No"
+      title: "Отримувачі",
+      dataIndex: "recipient",
+      key: "recipient",
     },
     {
-      title: t("Trigger At"),
-      dataIndex: "triggerAt",
-      key: "triggerAt",
+      title: "Час",
+      dataIndex: "sendsAt",
+      key: "sendsAt",
       render: (record:any) => (new Date(record).toLocaleString())
     },
     {
@@ -113,7 +113,7 @@ export const Newsletters: FC<IProps> = (): JSX.Element => {
         loading={loading}
         columns={config}
         pagination={{ ...params.pagination, total, onChange: onPaginationChange }}
-        dataSource={data?.pagedScheduledMessages?.items}
+        dataSource={data?.pagedScheduledEmails?.items}
         scroll={{ x: 600 }}
       />
     </Flex>

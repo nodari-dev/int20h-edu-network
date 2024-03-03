@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import { Button, Descriptions, Flex, Skeleton, Table } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
-import Title from "antd/es/typography/Title";
+import { Descriptions, Flex, Skeleton} from "antd";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { gql, useLazyQuery } from "@apollo/client";
 
@@ -9,7 +8,7 @@ interface IProps {}
 
 const line = gql`
   query pagedScheduledMessages($id: UUID!) {
-  pagedScheduledMessages(
+  pagedScheduledEmails(
     where: {
       id: {eq: $id}
     }
@@ -17,10 +16,10 @@ const line = gql`
     totalCount
     items {
       id
-      isTriggered
-      phoneNumbers
+      sendsAt
       text
-      triggerAt
+      recipient
+      subject
     }
   }
 }
@@ -29,64 +28,35 @@ const line = gql`
 export const Newsletter: FC<IProps> = (): JSX.Element => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [ groupData, setGroupData ] = useState<any>();
   const [ executeSearch ] = useLazyQuery(line);
 
   useEffect(() => {
     if (id) {
       executeSearch({ variables: { id } }).then((data) => {
-        setGroupData(data.data.pagedScheduledMessages.items[0]);
+        console.log(data)
+        setGroupData(data.data.pagedScheduledEmails?.items[0]);
       });
     }
   }, [ id ]);
 
-  const items = groupData
-    ? groupData.phoneNumbers.map((i: any) => ({ phoneNumber: i }))
-    : [];
-
-  const config: any = [
-    {
-      title: "ID",
-      dataIndex: "phoneNumber",
-      key: "phoneNumber",
-    },
-    {
-      title: t("users.actions"),
-      dataIndex: "",
-      key: "x",
-      fixed: "right",
-      width: "100px",
-      align: "center",
-      render: (record: any) => <Button
-        onClick={() => navigate("/user/" + record.phoneNumber)}
-      >{t("users.view")}</Button>,
-    },
-  ];
-
   return (
     <Flex vertical>
       <Skeleton loading={!groupData} active={true}>
-        <Descriptions title={t(`Newsletter info`)}>
+        <Descriptions title={"Інормація про розсилку"}>
           <Descriptions.Item key={groupData?.id} label={t(`Id`)}>
             {groupData?.id}
           </Descriptions.Item>
-          <Descriptions.Item key={groupData?.text} label={t(`Text`)}>
+          <Descriptions.Item key={groupData?.text} label={"Текст"}>
             {groupData?.text}
           </Descriptions.Item>
-          <Descriptions.Item key={"Is Triggered"} label={t(`Is Triggered`)}>
-            {groupData?.isTriggered ? "Yes" : "No"}
+          <Descriptions.Item key={groupData?.text} label={"Тема"}>
+            {groupData?.subject}
           </Descriptions.Item>
           <Descriptions.Item key={"Trigger At"} label={t(`Trigger At`)}>
             {(new Date(groupData?.triggerAt)).toLocaleString()}
           </Descriptions.Item>
         </Descriptions>
-        <Title level={5}>Users ({groupData?.phoneNumbers.length})</Title>
-        <Table
-          columns={config}
-          dataSource={items}
-          pagination={{ total: groupData?.phoneNumbers.length }}
-        />
       </Skeleton>
     </Flex>
   );
