@@ -1,4 +1,4 @@
-FROM node:20 AS build-env
+FROM node:20 AS builder-env
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ ENV VITE_BASE_URL=https://jwp-team.com/backend/api
 
 RUN npm install && npm run build
 
-FROM nginx:1.25.4-alpine3.18 AS runtime-env
+FROM nginx:alpine AS runtime-env
 
 WORKDIR /usr/share/nginx/html
 
