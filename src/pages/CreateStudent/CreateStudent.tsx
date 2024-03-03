@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import { Button, Col, Flex, Form, Input, InputNumber, Row, Select, Space } from "antd";
+import { Button, Flex, Form, Input, InputNumber, Select } from "antd";
 import Title from "antd/es/typography/Title";
-import { INSTITUTES } from "../CreateTeacher/institutes";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +50,6 @@ export const CreateStudent: FC<IProps> = (): JSX.Element => {
 
   useEffect(() => {
     findGroups().then((data) => {
-      console.log(data.data.groups);
       setGroups(data.data.groups.map(({ id, title }: any) => ({
         value: id,
         label: title,
@@ -85,67 +83,67 @@ export const CreateStudent: FC<IProps> = (): JSX.Element => {
             <>
               {fields.map(({ key, name, ...restField }) => (
                 <Flex key={key} style={{ width: "100%", marginBottom: 8 }} gap={8} align="baseline">
-                    <Form.Item
-                      {...restField}
-                      name={[ name, "fullName" ]}
-                      style={{ width: "100%" }}
-                      label="Full Name"
-                      rules={[ { required: true, message: "Missing title" } ]}
-                    >
-                      <Input />
-                    </Form.Item>
-                    <Form.Item
-                      {...restField}
-                      name={[ name, "email" ]}
-                      style={{ width: "100%" }}
-                      label="Email"
-                      rules={[
-                        { type: "email", message: "Incorrect email!" },
-                        { required: true, message: "Missing email" },
-                      ]}
-                    >
-                      <Input />
-                    </Form.Item>
-                    <Form.Item
-                      {...restField}
-                      name={[ name, "age" ]}
-                      style={{ width: "100%" }}
-                      label="Age"
-                      rules={[ { required: true, type: "number", message: "Missing Age" } ]}
-                    >
-                      <InputNumber min={17 as any} style={{ width: "100%" }} />
-                    </Form.Item>
-                    <Form.Item
-                      {...restField}
-                      name={[ name, "phoneNumber" ]}
-                      style={{ width: "100%" }}
-                      label="Phone Number"
-                      rules={[
-                        { required: true, message: "Missing Phone Number" },
-                      ]}
-                    >
-                      <Input />
-                    </Form.Item>
-                    <Form.Item
-                      {...restField}
-                      name={[ name, "password" ]}
-                      style={{ width: "100%" }}
-                      label="Password"
-                      rules={[
-                        { required: true, message: "Password" },
-                      ]}
-                    >
-                      <Input />
-                    </Form.Item>
-                    <Form.Item
-                      {...restField}
-                      name={[ name, "groupId" ]}
-                      style={{ width: "100%" }}
-                      label="Group"
-                      rules={[ { required: true } ]}
-                    >
-                      <Select allowClear options={groups} />
-                    </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[ name, "fullName" ]}
+                    style={{ width: "100%" }}
+                    label="Full Name"
+                    rules={[ { required: true, message: "Missing title" } ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[ name, "email" ]}
+                    style={{ width: "100%" }}
+                    label="Email"
+                    rules={[
+                      { type: "email", message: "Incorrect email!" },
+                      { required: true, message: "Missing email" },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[ name, "age" ]}
+                    style={{ width: "100%" }}
+                    label="Age"
+                    rules={[ { required: true, type: "number", message: "Missing Age" } ]}
+                  >
+                    <InputNumber min={17 as any} style={{ width: "100%" }} />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[ name, "phoneNumber" ]}
+                    style={{ width: "100%" }}
+                    label="Phone Number"
+                    rules={[
+                      { required: true, message: "Missing Phone Number" },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[ name, "password" ]}
+                    style={{ width: "100%" }}
+                    label="Password"
+                    rules={[
+                      { required: true, message: "Password" },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[ name, "groupId" ]}
+                    style={{ width: "100%" }}
+                    label="Group"
+                    rules={[ { required: true } ]}
+                  >
+                    <Select allowClear options={groups} />
+                  </Form.Item>
                   <MinusCircleOutlined onClick={() => remove(name)} />
                 </Flex>
               ))}
