@@ -18,13 +18,21 @@ const GROUP = gql`
     items {
       title
       id
-      users {
+      institute {
+      code
+      title
+      }
+      students {
        age
       email
       fullName
       phoneNumber
       id
-      role
+      }
+      teachers {
+      email
+      fullName
+      id
       }
     }
   }
@@ -32,19 +40,19 @@ const GROUP = gql`
 `;
 
 export const Group: FC<IProps> = (): JSX.Element => {
-  const { groupId } = useParams();
+  const { id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [ groupData, setGroupData ] = useState<any>();
   const [ executeSearch ] = useLazyQuery(GROUP);
 
   useEffect(() => {
-    if (groupId) {
-      executeSearch({ variables: { id: groupId } }).then((data) => {
+    if (id) {
+      executeSearch({ variables: { id } }).then((data) => {
         setGroupData(data.data.pagedGroups.items[0]);
       });
     }
-  }, [ groupId ]);
+  }, [ id ]);
 
   const config: any = [
     {
@@ -69,11 +77,6 @@ export const Group: FC<IProps> = (): JSX.Element => {
       key: "email",
     },
     {
-      title: "Institute",
-      dataIndex: "institute",
-      key: "institute",
-    },
-    {
       title: t("users.actions"),
       dataIndex: "",
       key: "x",
@@ -86,19 +89,48 @@ export const Group: FC<IProps> = (): JSX.Element => {
     },
   ];
 
+  const teacher_config: any = [
+    {
+      title: "Full Name",
+      dataIndex: "fullName",
+      key: "fullName",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: t("users.actions"),
+      dataIndex: "",
+      key: "x",
+      fixed: "right",
+      width: "100px",
+      align: "center",
+      render: (record: any) => <Button
+        onClick={() => navigate("/teachers/" + record.id)}
+      >{t("users.view")}</Button>,
+    },
+  ];
+
   return (
     <Flex vertical>
       <Skeleton loading={!groupData} active={true}>
         <Title level={3}>{groupData?.title}</Title>
-        <Title level={5}>Students ({groupData?.users.length})</Title>
+        <Title level={4}>{groupData?.institute.title} ({groupData?.institute.code})</Title>
+        <Title level={5}>Students ({groupData?.students?.length || 0})</Title>
         <Table
           columns={config}
-          dataSource={groupData?.users as any || []}
-          pagination={{ total: groupData?.users.length }}
+          dataSource={groupData?.students as any || []}
+          pagination={{ total: groupData?.students?.length }}
         />
 
-        <Title level={5}>Subjects (N/a)</Title>
-        <div>add</div>
+        <Title level={5}>Teachers ({groupData?.teachers?.length || 0})</Title>
+        <Table
+          columns={teacher_config}
+          dataSource={groupData?.teachers as any || []}
+          pagination={{ total: groupData?.teachers?.length }}
+        />
       </Skeleton>
     </Flex>
   );

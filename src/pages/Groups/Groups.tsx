@@ -19,7 +19,10 @@ const EXCHANGE_RATES = gql`
     items {
       id
       title
-      users {
+      institute {
+      code
+      }
+      students {
          id
       }
     }
@@ -69,9 +72,14 @@ export const Groups: FC<IProps> = (): JSX.Element => {
       key: "title",
     },
     {
-      title: t("groups.users"),
-      dataIndex: "users",
+      title: t("Інститут"),
+      key: "institute.code",
+      render: (record) => record.institute.code
+    },
+    {
+      title: t("Студенти"),
       key: "users",
+      render: (record) => record?.students?.length || 0
     },
     {
       title: t("groups.actions"),
@@ -99,7 +107,7 @@ export const Groups: FC<IProps> = (): JSX.Element => {
         loading={loading}
         columns={config}
         pagination={{ ...params.pagination, total, onChange: onPaginationChange }}
-        dataSource={data?.pagedUserGroups?.items}
+        dataSource={data?.pagedGroups?.items}
         scroll={{ x: 600 }}
       />
     </Flex>
