@@ -115,7 +115,7 @@ export const Students: FC<IProps> = (): JSX.Element => {
 
   return (
     <Flex gap="small" vertical>
-      <Title level={3} style={{ margin: 0 }}>{t("users.title")}</Title>
+      <Title level={3} style={{ margin: 0 }}>Студенти</Title>
       <SearchBar onSearch={handleSearch} placeholder="Search by name" />
       <Table
         loading={loading}
