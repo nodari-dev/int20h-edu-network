@@ -3,16 +3,16 @@ import { Button, Flex, Table, TableProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { gql, useLazyQuery } from "@apollo/client";
-import { useStudentsConfig } from "../Students/useStudentsConfig";
 import Title from "antd/es/typography/Title";
 import { SearchBar } from "../../components";
 import { ORDER_QUERY, TQuery } from "../../models/query";
+import {useTeachersConfig} from "./useTeachersConfig";
 
 interface IProps {}
 // TODO: UPDATE
 const EXCHANGE_RATES = gql`
-  query users($search: String!, $pageSize: Int, $offset: Int, $sorters: [UserDtoSortInput!] ) {
-  pagedUsers(
+  query users($search: String!, $pageSize: Int, $offset: Int, $sorters: [TeacherDtoSortInput!] ) {
+  pagedTeachers(
     skip: $offset
     take: $pageSize
     where: {
@@ -28,12 +28,9 @@ const EXCHANGE_RATES = gql`
     }
     totalCount
     items {
-      age
       email
       fullName
-      phoneNumber
       id
-      role
     }
   }
 }
@@ -65,7 +62,7 @@ export const Teachers: FC<IProps> = (): JSX.Element => {
     }
 
     executeSearch({ variables }).then((res) => {
-      setTotal(res.data.pagedUsers.totalCount);
+      setTotal(res.data.pagedTeachers.totalCount);
     });
   }, [ params, search ]);
 
@@ -74,7 +71,7 @@ export const Teachers: FC<IProps> = (): JSX.Element => {
       <Button onClick={() => navigate("/students/" + record.id)}>{t("users.view")}</Button>
     );
   };
-  const config = useStudentsConfig({ onView: renderView });
+  const config = useTeachersConfig({ onView: renderView });
 
   const handleSearch = (v: string) => {
     setSearch(v);
@@ -119,7 +116,7 @@ export const Teachers: FC<IProps> = (): JSX.Element => {
         loading={loading}
         columns={config}
         pagination={{ ...params.pagination, total, onChange: onPaginationChange }}
-        dataSource={data?.pagedUsers?.items}
+        dataSource={data?.pagedTeachers?.items}
         onChange={onChange}
         scroll={{ x: 600 }}
       />
